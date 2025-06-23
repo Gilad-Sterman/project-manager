@@ -1,0 +1,143 @@
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+
+body {
+    direction: rtl;
+    margin: 0;
+    text-align: start;
+    overflow-x: hidden;
+    font-family: "Secular One", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 .5em;
+    color: $clr-primary;
+}
+
+p {
+    color: $clr-txt;
+}
+
+a {
+    text-decoration: none;
+    color: $clr-bg;
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $clr-header;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 0px;
+}
+
+
+
+/* Dont stretch my Media */
+img,
+embed,
+video,
+object {
+    max-width: 100%
+}
+
+/* Simple and useful CSS Debugging Technique */
+.debug * {
+    outline: 1px solid gold
+}
+
+a.active {
+    text-decoration: none;
+    font-weight: bold;
+    color: $clr-secondary;
+}
+
+button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $clr-txt;
+    margin: 0.5em;
+    border: 0;
+    padding: 0.5em 0.8em;
+    border-radius: 4px;
+    background-color: $clr-secondary;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    &:hover {
+        transition: .3s;
+    }
+}
+
+
+input {
+    color: $clr-primary;
+}
+
+input:focus {
+    background-color: $clr-primary;
+    color: $clr-bg;
+    transition: background-color .6s;
+    outline: none;
+}
+
+.full-page {
+    background-color: $clr-bg;
+}
+
+// .main-content {
+//     display: flex;
+//     justify-content: space-between;
+// }
+
+/* for desktop */
+.whatsapp_float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+}
+
+.whatsapp-icon {
+    margin-top: 16px;
+}
+
+/* for mobile */
+@media screen and (max-width: 767px) {
+    .whatsapp-icon {
+        margin-top: 10px;
+    }
+
+    .whatsapp_float {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 10px;
+        font-size: 22px;
+    }
+}

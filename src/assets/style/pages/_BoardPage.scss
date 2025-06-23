@@ -1,0 +1,132 @@
+.board-page {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    direction: rtl;
+    color: $clr-txt;
+
+    .top {
+        position: relative;
+
+        h2 {
+            margin-bottom: 0.5rem;
+            color: $clr-header;
+            font-size: 1.8rem;
+        }
+
+        .btn-delete {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            color: $clr-redish;
+            cursor: pointer;
+
+            &:hover {
+                color: darken($clr-redish, 8%);
+                background-color: $clr-footer;
+            }
+        }
+
+        .description {
+            margin: .5rem 0;
+            color: $clr-txt;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        button {
+            background-color: $clr-primary;
+            margin: 0;
+            align-self: start;
+            padding: 0.3rem 0.7rem;
+            color: #fff;
+            border-radius: 0.3rem;
+            border: none;
+
+            &:hover {
+                background: darken($clr-primary, 8%);
+            }
+        }
+
+        .add-team-select {
+            margin-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            select {
+                width: 150px;
+                border-radius: 0.4rem;
+                border: 1px solid $clr-light-border;
+                padding: 0.4rem;
+            }
+        }
+
+    }
+
+    .board-actions {
+        background-color: $clr-bg;
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+        padding: 1rem;
+
+        .stage {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .staff {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+
+            span {
+                color: $clr-bg;
+                padding: 0.3rem 0.7rem;
+                border-radius: 999px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .dates {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-add {
+            background-color: $clr-primary;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
+            width: max-content;
+
+            &:hover {
+                background-color: darken($clr-primary, 8%);
+            }
+        }
+    }
+
+    .tasks {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.2rem;
+        margin-top: 2rem;
+        align-items: start;
+        padding: 0 0.5rem;
+
+        @media (min-width: 900px) {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+    }
+}

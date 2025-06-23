@@ -1,0 +1,164 @@
+.task-preview {
+    position: relative;
+    background-color: $clr-section-green-light;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+    cursor: pointer;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .stage-select {
+            font-size: 0.8rem;
+            border-radius: 0.4rem;
+
+            .selected {
+                border: none;
+
+                span {
+                    color: $clr-bg;
+                }
+
+                img {
+                    display: none;
+                }
+            }
+
+            &.inProgress {
+                background-color: $clr-orange;
+
+                .options {
+                    background-color: $clr-orange;
+                }
+            }
+
+            &.waiting {
+                background-color: $clr-light-border;
+
+                .options {
+                    background-color: $clr-light-border;
+                }
+            }
+
+            &.done {
+                background-color: $clr-primary;
+
+                .options {
+                    background-color: $clr-primary;
+                }
+            }
+        }
+    }
+
+    .members {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.5rem;
+        gap: 0.3rem;
+        
+        .task-members {
+            justify-content: start;
+            align-items: start;
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .avatar {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .remove {
+                position: absolute;
+                top: -6px;
+                right: -6px;
+                background: #f33;
+                color: #fff;
+                font-size: 0.6rem;
+                border: none;
+                border-radius: 50%;
+                width: 14px;
+                height: 14px;
+                line-height: 14px;
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+
+        .add-member {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+
+            button {
+                background: $clr-footer;
+                border-radius: 0.3rem;
+                padding: 0.2rem 0.5rem;
+                border: none;
+                font-size: 0.75rem;
+
+                &:hover {
+                    background: darken($clr-footer, 8%);
+                }
+            }
+        }
+    }
+
+    .details {
+        margin-top: 0.5rem;
+
+        textarea,
+        input[type="text"] {
+            display: block;
+            width: 100%;
+            margin-top: 0.3rem;
+            padding: 0.4rem;
+            border-radius: 0.3rem;
+            border: 1px solid $clr-light-border;
+        }
+
+        .my-input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: $clr-txt;
+        }
+
+        .date-input {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid $clr-primary;
+            border-radius: 0.4rem;
+            background-color: $clr-bg;
+            color: $clr-txt;
+            width: max-content;
+            margin-top: 0.3rem;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+        }
+
+        button {
+            margin: 0;
+            border-radius: 0.3rem;
+            background-color: $clr-footer;
+            border: none;
+
+            &:hover {
+                background-color: darken($clr-footer, 8%);
+            }
+        }
+    }
+}

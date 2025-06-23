@@ -1,0 +1,48 @@
+// Primary color - deep teal for buttons and accents
+$clr-primary: #2a7f62;
+$clr-primary-filter: brightness(0) saturate(100%) invert(33%) sepia(12%) saturate(987%) hue-rotate(126deg) brightness(90%) contrast(92%);
+
+// Secondary color - muted amber
+$clr-secondary: #d9a441;
+$clr-secondary-filter: brightness(0) saturate(100%) invert(77%) sepia(23%) saturate(654%) hue-rotate(25deg) brightness(92%) contrast(89%);
+
+// Background - soft warm gray
+$clr-bg: #f5f3f0;
+$clr-bg-filter: brightness(0) saturate(100%) invert(98%) sepia(4%) saturate(184%) hue-rotate(34deg) brightness(95%) contrast(89%);
+
+// Text - charcoal gray
+$clr-txt: #333333;
+$clr-txt-filter: brightness(0) saturate(100%) invert(13%) sepia(2%) saturate(14%) hue-rotate(182deg) brightness(97%) contrast(95%);
+
+// Header - cool muted cobalt
+$clr-header: #5a7fa8;
+$clr-header-filter: brightness(0) saturate(100%) invert(56%) sepia(12%) saturate(847%) hue-rotate(194deg) brightness(90%) contrast(92%);
+
+// Footer - soft sandy beige
+$clr-footer: #f6dbc5;
+$clr-footer-filter: brightness(0) saturate(100%) invert(93%) sepia(8%) saturate(294%) hue-rotate(28deg) brightness(95%) contrast(87%);
+
+// Soft complimentary shades
+$clr-section-blue-light: #d1e5f5; // Gentle sky blue
+$clr-section-blue-light-filter: brightness(0) saturate(100%) invert(90%) sepia(9%) saturate(320%) hue-rotate(190deg) brightness(95%) contrast(89%);
+
+$clr-section-green-light: #e3f0e8; // Light pastel green
+$clr-section-green-light-filter: brightness(0) saturate(100%) invert(94%) sepia(3%) saturate(152%) hue-rotate(95deg) brightness(94%) contrast(85%);
+
+$clr-section-blush-light: #fbeeea; // Pale blush
+$clr-section-blush-light-filter: brightness(0) saturate(100%) invert(96%) sepia(7%) saturate(304%) hue-rotate(340deg) brightness(94%) contrast(87%);
+
+// Rich accent shades
+$clr-section-blue-deep: #395a8a; // Muted deep blue
+$clr-section-blue-deep-filter: brightness(0) saturate(100%) invert(39%) sepia(8%) saturate(820%) hue-rotate(197deg) brightness(89%) contrast(90%);
+
+$clr-section-green-deep: #4e6f5b; // Earthy forest green
+$clr-section-green-deep-filter: brightness(0) saturate(100%) invert(43%) sepia(8%) saturate(350%) hue-rotate(115deg) brightness(88%) contrast(85%);
+
+$clr-section-blush-deep: #d4b0a5; // Warm dusty rose
+$clr-section-blush-deep-filter: brightness(0) saturate(100%) invert(82%) sepia(16%) saturate(330%) hue-rotate(340deg) brightness(89%) contrast(88%);
+
+// Accent redish - rich coral red
+$clr-redish: #c94e3f;
+$clr-orange: #d17820;
+$clr-light-border: #d45c48;

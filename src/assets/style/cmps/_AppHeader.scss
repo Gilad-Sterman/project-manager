@@ -1,0 +1,70 @@
+.app-header {
+    background-color: $clr-header;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid $clr-section-blue-deep;
+    direction: rtl;
+
+    .left {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        cursor: pointer;
+
+        svg {
+            color: #fff;
+        }
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    .center-nav {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+
+        a {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+
+            &:hover {
+                color: lighten($clr-footer, 5%);
+            }
+            
+            &.active {
+                color: darken($clr-footer, 5%);
+            }
+        }
+    }
+
+    .right {
+        display: flex;
+        justify-content: flex-end;
+
+        .btn-add-header {
+            background-color: $clr-section-blue-deep;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s;
+
+            svg {
+                transform: rotate(180deg);
+            }
+            &:hover {
+                background-color: darken($clr-section-blue-deep, 8%);
+            }
+        }
+    }
+}

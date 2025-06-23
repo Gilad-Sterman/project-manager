@@ -1,0 +1,100 @@
+.home {
+  padding: 2rem;
+  background-color: $clr-bg;
+  color: $clr-txt;
+  min-height: 100vh;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: $clr-header;
+  }
+
+  .btn-add {
+    background-color: $clr-primary;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 2rem;
+
+    &:hover {
+      background-color: darken($clr-primary, 8%);
+    }
+  }
+
+  .board-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .info {
+    background-color: $clr-section-blue-light;
+    padding: 0.6rem 1rem;
+    border-radius: 0.4rem;
+    width: 50vw;
+    max-width: 600px;
+
+    h4 {
+      font-size: 1.25rem;
+      
+      span {
+        font-size: 1rem;
+        font-weight: 100;
+      }
+    }
+
+    .stages-info {
+      
+      .inProgress {
+        color: $clr-orange;
+      }
+      
+      .done {
+        color: $clr-primary;
+      }
+      
+      .waiting {
+        color: $clr-redish;
+      }
+    }
+  }
+
+  .no-boards {
+    background-color: $clr-section-blush-light;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    color: $clr-section-blush-deep;
+
+    h4 {
+      margin: 0;
+      font-size: 1.2rem;
+
+      span {
+        color: $clr-primary;
+        cursor: pointer;
+        text-decoration: underline;
+
+        &:hover {
+          color: darken($clr-primary, 8%);
+        }
+      }
+    }
+  }
+
+  // Optional: Modal overlay styling
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+}

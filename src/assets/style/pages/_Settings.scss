@@ -1,0 +1,73 @@
+.settings-page {
+    background-color: $clr-bg;
+    min-height: 100dvh;
+    padding: 1.5rem;
+    color: $clr-txt;
+
+    h1 {
+        font-size: 1.75rem;
+        color: $clr-header;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            border-radius: 50%;
+            width: 200px;
+            border: 1px solid $clr-primary;
+            padding: .25rem;
+        }
+
+        form {
+            border-radius: .5rem;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            background-color: $clr-section-blue-light;
+            padding: 1rem;
+            margin-block: 2rem;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+                rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+
+
+            .my-input {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: .5rem;
+                margin-bottom: .25rem;
+
+                label {
+                    color: $clr-primary;
+                    font-weight: bold;
+                }
+
+                input {
+                    border-radius: .5rem;
+                    border: 1px solid $clr-primary;
+
+                    &:disabled {
+                        background-color: $clr-section-blue-light;
+                    }
+                }
+            }
+
+            button {
+                width: max-content;
+                margin: auto;
+                background-color: $clr-primary;
+                color: $clr-bg;
+
+                &:hover {
+                    background-color: $clr-section-blue-deep;
+                }
+            }
+        }
+    }
+}

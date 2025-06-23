@@ -1,0 +1,132 @@
+.add-new-modal {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    max-width: 700px;
+    width: 90vw;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    direction: rtl; // ✅ RTL layout
+    color: $clr-txt;
+
+
+    h3 {
+        color: $clr-header;
+        font-size: 1.5rem;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: transparent;
+        margin: 0;
+        border: none;
+        cursor: pointer;
+
+        img {
+            width: 18px;
+            height: 18px;
+            filter: $clr-txt-filter;
+        }
+
+        &:hover img {
+            filter: brightness(0) saturate(100%) invert(39%) sepia(23%) saturate(551%) hue-rotate(194deg) brightness(92%) contrast(90%);
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .my-input {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            margin-bottom: 0.3rem;
+            color: $clr-txt;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input,
+        textarea,
+        select {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid $clr-primary;
+            border-radius: 0.4rem;
+            font-size: 0.95rem;
+            background-color: $clr-bg;
+            color: $clr-txt;
+
+            &:focus {
+                outline: 2px solid $clr-primary;
+                background-color: lighten($clr-bg, 2%);
+            }
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+    }
+
+    .select-label {
+        font-size: 0.9rem;
+    }
+
+    select[multiple] {
+        height: auto;
+        min-height: 100px;
+    }
+
+    .add-members-toggle {
+        color: $clr-primary;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin-top: -0.5rem;
+        margin-bottom: 0.5rem;
+        text-decoration: underline;
+
+        &:hover {
+            color: darken($clr-primary, 10%);
+        }
+    }
+
+    .btn-add {
+        background-color: $clr-primary;
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 0.5rem;
+
+        &:hover {
+            background-color: darken($clr-primary, 8%);
+        }
+    }
+
+    .dates {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .date-input {
+        align-self: flex-start;
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid $clr-primary;
+        border-radius: 0.4rem;
+        background-color: $clr-bg;
+        color: $clr-txt;
+    }
+}
