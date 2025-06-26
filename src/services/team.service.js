@@ -2,7 +2,7 @@ export const teamService = {
     loadTeam,
 }
 
-export function loadTeam(team, filterBy) {
+function loadTeam(team, filterBy) {
     const { txt = '', sortBy = 'name', sortDir = 1 } = filterBy
 
     const normalize = str => str.trim().toLowerCase()
@@ -37,3 +37,4 @@ export function loadTeam(team, filterBy) {
 
     return filteredTeam
 }
+

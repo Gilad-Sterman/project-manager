@@ -27,9 +27,13 @@ export function Home() {
         description: '',
         createdAt: new Date().toISOString().split('T')[0],
         deadline: new Date().toISOString().split('T')[0],
+        completionDate: '',
         tasks: [],
         stage: 'inProgress',
-        staffMembers: []
+        manager: {},
+        requestedBy: '',
+        staffMembers: [],
+        items: []
     }
 
     useEffect(() => {
@@ -80,9 +84,20 @@ export function Home() {
                 </div>
             </>
             ) : boards?.length > 0 ? (
-                <div className='no-boards-match'>
-                    <h4>לא נמצאו לוחות תואמים לחיפוש </h4>
-                </div>
+                <>
+                    <div className='no-boards-match'>
+                        <h4>לא נמצאו לוחות תואמים לחיפוש </h4>
+                    </div>
+                    <div className='info'>
+                        <h4>מספר פרוייקטים: <span>{boards.length}</span></h4>
+                        <ul className='stages-info clean-list'>
+                            {projectStages.map(stage =>
+                                boards.filter(board => board.stage === stage.value).length > 0 && <li key={stage.value} className={stage.value}>{stage.title}: {boards.filter(board => board.stage === stage.value).length}</li>
+                            )}
+                        </ul>
+                        <h4 onClick={() => navigate('/team')}>מספר חברי צוות: <span>{team.length}</span></h4>
+                    </div>
+                </>
             ) : (
                 <div className='no-boards'>
                     <h4>אין לוחות פרוייקטים <span onClick={handleAdd}>לחצו להוספת לוח חדש</span></h4>

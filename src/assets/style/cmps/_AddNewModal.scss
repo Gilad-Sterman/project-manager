@@ -45,8 +45,10 @@
     }
 
     .my-input {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        align-items: center;
+        gap: .3rem;
 
         label {
             margin-bottom: 0.3rem;
@@ -64,16 +66,20 @@
             font-size: 0.95rem;
             background-color: $clr-bg;
             color: $clr-txt;
+            flex-grow: 1;
 
             &:focus {
                 outline: 2px solid $clr-primary;
                 background-color: lighten($clr-bg, 2%);
             }
+
+            option {
+                color: $clr-primary;
+            }
         }
 
         textarea {
             resize: vertical;
-            min-height: 80px;
         }
     }
 

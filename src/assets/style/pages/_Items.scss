@@ -1,0 +1,57 @@
+.item-page {
+    padding: 2rem;
+
+    h2 {
+        margin-bottom: 1rem;
+        color: $clr-header;
+    }
+
+    .btn-add {
+        margin-bottom: 1.5rem;
+        background-color: $clr-primary;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: darken($clr-primary, 7%);
+        }
+    }
+
+    .item-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+
+    .item-preview {
+        background-color: $clr-section-blue-light;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .item-info {
+            h4 {
+                margin: 0 0 0.5rem 0;
+                color: $clr-header;
+            }
+
+            p {
+                margin: 0.2rem 0;
+                font-size: 0.9rem;
+                color: $clr-txt;
+            }
+        }
+
+        .item-meta {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: $clr-primary;
+            font-style: italic;
+        }
+    }
+}

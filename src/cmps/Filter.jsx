@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { projectStages } from "../services/board.service"
+import { ArrowBigDownIcon, ArrowBigUpIcon } from "lucide-react"
 
 export function Filter({ filterBy, setFilterBy, type, selectOptions, expenseTypes }) {
     const [showMaxInv, setShowMaxInv] = useState(false)
@@ -49,18 +50,22 @@ export function Filter({ filterBy, setFilterBy, type, selectOptions, expenseType
                 <button onClick={() => setIsSelect(!isSelect)}>
                     {selectOptions.find(option => option.value === sortBy).title}
                 </button>
-                {/* <button className="sortDir-btn" onClick={() => setNewFilter({ target: { name: 'sortDir', value: sortDir === 'up' ? 'down' : 'up' } })}>
-                    <img className={`sortDir ${sortDir === 'up' ? 'up' : 'down'}`} src="https://res.cloudinary.com/dollaguij/image/upload/v1701785794/wednesday/bwudwrzkha2pdcy3ga7q.svg" alt="" />
-                </button> */}
-            </section>}
-            {isSelect && <section className="select-modal">
-                {selectOptions.map((option, idx) =>
-                    <div key={idx} className={`select-option`}
-                        onClick={() => setNewFilter({ target: { name: 'sortBy', value: option.value } })}><span>{option.title}</span>
-                        {(filterBy.sortBy === option.value) &&
-                            <img className={"checked-svg-img"} src="https://res.cloudinary.com/dollaguij/image/upload/v1699194254/svg/checked_paj0fg.svg" alt="" />
-                        }
-                    </div>)}
+                <button className="sortDir" onClick={() => setNewFilter({ target: { name: 'sortDir', value: sortDir === 1 ? -1 : 1 } })}>
+                    {sortDir === 1 ? (
+                        <ArrowBigUpIcon size={18} />
+                    ) : (
+                        <ArrowBigDownIcon size={18} />
+                    )}
+                </button>
+                {isSelect && <section className="select-modal">
+                    {selectOptions.map((option, idx) =>
+                        <div key={idx} className={`select-option`}
+                            onClick={() => setNewFilter({ target: { name: 'sortBy', value: option.value } })}><span>{option.title}</span>
+                            {(filterBy.sortBy === option.value) &&
+                                <img className={"checked-svg-img"} src="https://res.cloudinary.com/dollaguij/image/upload/v1699194254/svg/checked_paj0fg.svg" alt="" />
+                            }
+                        </div>)}
+                </section>}
             </section>}
         </section>
     )

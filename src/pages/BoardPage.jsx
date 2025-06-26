@@ -5,7 +5,7 @@ import { deleteBoard, updateBoard } from "../store/board.actions"
 import { MySelect } from "../cmps/MySelect"
 import { AddNewModal } from "../cmps/AddNewModal"
 import { utilService } from "../services/util.service"
-import { ArrowLeft, ArrowRight, Trash, Trash2 } from "lucide-react"
+import { ArrowLeft, ArrowRight, Edit3, Save, Trash, Trash2 } from "lucide-react"
 import { projectStages } from "../services/board.service"
 import { TaskPreview } from "../cmps/TaskPreview"
 
@@ -15,10 +15,16 @@ export function BoardPage() {
     const dispatch = useDispatch()
     const boards = useSelector(state => state.boardModule.boards)
     const team = useSelector(state => state.staffModule.staff)
+    const items = useSelector(state => state.itemModule.items)
     const [myBoard, setMyBoard] = useState(null)
     const [myteam, setMyTeam] = useState(null)
+    const [myItems, setMyItems] = useState(null)
     const [showTeam, setShowTeam] = useState(false)
     const [selectedTeamIds, setSelectedTeamIds] = useState([])
+    const [showItems, setShowItems] = useState(false)
+    const [selectedItemIds, setSelectedItemIds] = useState([])
+    const [isEdit, setIsEdit] = useState(false)
+    const [boardToEdit, setBoardToEdit] = useState(null)
 
     const [showAdd, setShowAdd] = useState(false)
     const taskToAdd = {
@@ -38,9 +44,13 @@ export function BoardPage() {
     function loadBoard(boardId) {
         const b = boards.find(board => board._id === boardId)
         setMyBoard(b)
+        setBoardToEdit(b)
         const myTeamIds = b.staffMembers
+        const myItemIds = b.items
         const t = team.filter(teamMate => myTeamIds.includes(teamMate._id))
+        const I = items.filter(item => myItemIds.includes(item._id))        
         setMyTeam(t)
+        setMyItems(I)
     }
 
     async function onDeleteBoard() {
@@ -92,6 +102,16 @@ export function BoardPage() {
         }
     }
 
+    async function onSaveBoard() {
+        const newBoard = JSON.parse(JSON.stringify(boardToEdit))
+        try {
+            dispatch(updateBoard(newBoard))
+            setIsEdit(false)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async function onUpdateTask(updatedTask) {
         const newTasks = myBoard.tasks.map(task => task._id === updatedTask._id ? updatedTask : task)
         myBoard.tasks = newTasks
@@ -125,17 +145,77 @@ export function BoardPage() {
 
     }
 
+    function handleItemSelection(ev) {
+        const options = [...ev.target.options]
+        const selected = options.filter(o => o.selected).map(o => o.value)
+        setSelectedItemIds(selected)
+    }
+
+    async function onAddSelectedItem() {
+        if (!selectedItemIds.length) return
+        const updatedBoard = {
+            ...myBoard,
+            items: [...myBoard.items, ...selectedItemIds]
+        }
+        try {
+            dispatch(updateBoard(updatedBoard))
+            setSelectedItemIds([])
+            setShowItems(false)
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
+    function handleInput({ target }) {
+        const value = target.type === 'number' ? +target.value : target.value
+        setBoardToEdit(prev => ({ ...prev, [target.name]: value }))
+    }
+
     return (
         <section className="board-page">
             {!myBoard?._id ? (
                 <h2>הלוח לא נמצא, נא לנסות שוב</h2>
             ) : (<>
                 <section className="top">
-                    <h2>{myBoard.name}</h2>
-                    {myBoard.description && <p className="description">
+                    {!isEdit && <h2>{myBoard.name}</h2>}
+                    {!isEdit && <p>דורש הפרוייקט: {myBoard.requestedBy}</p>}
+                    {myBoard.description && !isEdit && <p className="description">
                         {myBoard.description}
                     </p>}
+                    {isEdit && <section className="edit-top">
+                        <input
+                            type="text"
+                            name="name"
+                            className="project-name"
+                            value={boardToEdit.name}
+                            onInput={handleInput}
+                        />
+                        <label htmlFor="requestedBy">דורש הפרוייקט</label>
+                        <input
+                            type="text"
+                            name="requestedBy"
+                            id="requestedBy"
+                            placeholder="דורש הפרוייקט"
+                            value={boardToEdit.requestedBy}
+                            onInput={handleInput}
+                        />
+                        <label htmlFor="description">תיאור הפרוייקט</label>
+                        <textarea
+                            name="description"
+                            id="description"
+                            value={boardToEdit.description}
+                            placeholder="תיאור הפרוייקט"
+                            onInput={handleInput}
+                        />
+                    </section>}
                     <button className="btn-delete" onClick={() => onDeleteBoard()}><Trash2 /></button>
+                    {!isEdit && <button className="btn-edit" onClick={() => setIsEdit(!isEdit)}>
+                        <Edit3 />
+                    </button>}
+                    {isEdit && <button className="btn-save" onClick={() => onSaveBoard()}>
+                        <Save />
+                    </button>}
                     <button className="btn-add-from-team" onClick={() => setShowTeam(!showTeam)}>
                         הוספת חברי צוות
                     </button>
@@ -145,7 +225,7 @@ export function BoardPage() {
                             <select multiple onChange={handleTeamSelection}>
                                 {team.filter(member => !myBoard.staffMembers.includes(member._id)).map(member => (
                                     <option key={member._id} value={member._id}>
-                                        {member.name}
+                                        {member.fName} {member.lName}
                                     </option>
                                 ))}
                             </select>
@@ -155,17 +235,44 @@ export function BoardPage() {
                     {showTeam && team.filter(member => !myBoard.staffMembers.includes(member._id)).length === 0 && (
                         <p className="all-added-msg">כל הצוות כבר משויך ללוח</p>
                     )}
+
+                    <button className="btn-add-item" onClick={() => setShowItems(!showItems)}>
+                        הוספת  פריטים
+                    </button>
+
+                    {showItems && items.filter(item => !myBoard.items.includes(item._id)).length > 0 && (
+                        <section className="add-item-select">
+                            <select multiple onChange={handleItemSelection}>
+                                {items.filter(item => !myBoard.items.includes(item._id)).map(item => (
+                                    <option key={item._id} value={item._id}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <button onClick={onAddSelectedItem}>הוספה</button>
+                        </section>
+                    )}
+                    {showItems && items.filter(item => !myBoard.items.includes(item._id)).length === 0 && (
+                        <p className="all-added-msg">כל הפריטים כבר משוייכים ללוח</p>
+                    )}
                 </section>
                 <section className="board-actions">
                     <div className="staff">
                         צוות:
-                        {myBoard.staffMembers.map(member =>
-                            <span key={member} style={{ backgroundColor: utilService.stringToColor(member) }}>{team.find(mem => mem._id === member)?.name}</span>
+                        {myBoard.staffMembers?.map(member =>
+                             <span key={member} style={{ backgroundColor: utilService.stringToColor(member) }}>{team.find(mem => mem._id === member)?.fName} {team.find(mem => mem._id === member)?.lName}</span>
                         )}
                     </div>
                     <div className="stage">
                         סטטוס:
                         <MySelect options={projectStages} selected={myBoard.stage} setSelected={onSelectStage} />
+                    </div>
+                    <span>אחראי: {myBoard.manager?.fName} {myBoard.manager?.lName}</span>
+                    <div className="items">
+                        פריטים:
+                        {myBoard.items?.map(item =>
+                            <span key={item}>{items.find(i => i._id === item)?.name}</span>
+                        )}
                     </div>
                     <div className="dates">
                         <span>תאריך יצירה: {myBoard.createdAt}</span>
@@ -181,7 +288,7 @@ export function BoardPage() {
                 </section>
             </>
             )}
-            {showAdd && <AddNewModal type={'task'} objectToAdd={taskToAdd} addFunc={onAddNewTask} setShowAdd={setShowAdd} team={myteam} />}
+            {showAdd && <AddNewModal type={'task'} objectToAdd={taskToAdd} addFunc={onAddNewTask} setShowAdd={setShowAdd} team={myteam} items={myItems} />}
         </section>
     )
 }

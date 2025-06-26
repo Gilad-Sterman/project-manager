@@ -14,15 +14,33 @@
             font-size: 1.8rem;
         }
 
-        .btn-delete {
+        .btn-delete,
+        .btn-edit,
+        .btn-save {
             position: absolute;
             top: 1rem;
             left: 1rem;
             background: transparent;
             border: none;
             font-size: 1.2rem;
+        }
+
+        .btn-edit,
+        .btn-save {
+            top: 4rem;
+            left: 1rem;
+            color: $clr-header;
+
+            &:hover {
+                color: darken($clr-header, 8%);
+                background-color: $clr-section-blue-light;
+            }
+        }
+
+        .btn-delete {
+            top: 1rem;
+            left: 1rem;
             color: $clr-redish;
-            cursor: pointer;
 
             &:hover {
                 color: darken($clr-redish, 8%);
@@ -37,9 +55,32 @@
             line-height: 1.4;
         }
 
+        .edit-top {
+            display: flex;
+            flex-direction: column;
+
+            input,
+            textarea {
+                background-color: #fff;
+                color: $clr-primary;
+                padding: 0.3rem 0.5rem;
+                border-radius: 0.3rem;
+                border: 1px solid $clr-primary;
+                width: max-content;
+                margin-bottom: 0.3rem;
+            }
+
+            .project-name {
+                margin-bottom: 0.5rem;
+                color: $clr-header;
+                font-size: 1.8rem;
+            }
+        }
+
         button {
             background-color: $clr-primary;
             margin: 0;
+            margin-top: .5rem;
             align-self: start;
             padding: 0.3rem 0.7rem;
             color: #fff;
@@ -91,6 +132,21 @@
 
             span {
                 color: $clr-bg;
+                padding: 0.3rem 0.7rem;
+                border-radius: 999px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        .items {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+
+            span {
+                color: $clr-bg;
+                background-color: $clr-header;
                 padding: 0.3rem 0.7rem;
                 border-radius: 999px;
                 font-size: 0.85rem;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { loadTeam } from "../services/team.service"
+import { teamService } from "../services/team.service"
 import { TeamPreview } from "../cmps/TeamPreview"
 import { Filter } from "../cmps/Filter"
 import { utilService } from "../services/util.service"
@@ -14,13 +14,21 @@ export function Team() {
     const boards = useSelector(state => state.boardModule.boards)
     const team = useSelector(state => state.staffModule.staff)
     const [myTeam, setMyTeam] = useState(team)
-    const [filterBy, setFilterBy] = useState({ txt: '', sortBy: 'name', sortDir: 1 })
-    const sortOptions = [{ value: 'name', title: 'שם' }, { value: 'createdAt', title: 'תאריך יצירה' }]
+    const [filterBy, setFilterBy] = useState({ txt: '', sortBy: 'fName', sortDir: 1 })
+    const sortOptions = [{ value: 'fName', title: 'שם' }, { value: 'lName', title: 'שם משפחה' }, { value: 'createdAt', title: 'תאריך יצירה' }]
 
     const [showAdd, setShowAdd] = useState(false)
     const TeamMateToAdd = {
         _id: utilService.generateRandomId(),
-        name: '',
+        fName: '',
+        lName: '',
+        pNum: '',
+        idNum: '',
+        phone: '',
+        rank: '',
+        role: '',
+        draftDate: '',
+        division: '',
         createdAt: new Date().toISOString().split('T')[0],
     }
 
@@ -29,7 +37,7 @@ export function Team() {
     }, [team, filterBy])
 
     function loadMyTeam() {
-        const filtered = loadTeam(team, filterBy)
+        const filtered = teamService.loadTeam(team, filterBy)
         setMyTeam(filtered)
     }
 
@@ -38,23 +46,21 @@ export function Team() {
         setShowAdd(!showAdd)
     }
 
-    async function onAddNewTeamMate(newTeamMates) {
+    async function onAddNewTeamMate(newTeamMate) {
         try {
-            const existingNames = team.map(member => member.name.trim())
+            const existingPNum = team.map(member => member.pNum)
             const added = []
             const skipped = []
 
-            newTeamMates.forEach(newTeamMate => {
-                if (!existingNames.includes(newTeamMate.name.trim())) {
-                    dispatch(addStaffMember(newTeamMate))
-                    added.push(newTeamMate.name)
-                } else {
-                    skipped.push(newTeamMate.name)
-                }
-            })
+            if (!existingPNum.includes(newTeamMate.pNum)) {
+                dispatch(addStaffMember(newTeamMate))
+                added.push(newTeamMate.name)
+            } else {
+                skipped.push(newTeamMate.name)
+            }
 
             if (skipped.length) {
-                alert(`שמות אלה כבר קיימים ולא נוספו:\n${skipped.join(', ')}`)
+                alert(`מתשמשים אלה כבר קיימים ולא נוספו:\n${skipped.join(', ')}`)
             }
 
             setShowAdd(false)
@@ -113,7 +119,7 @@ export function Team() {
                 </div>
             ) : (
                 <div className='no-team'>
-                    <h4>אין חברי צוות<span onClick={handleAdd}>לחצו להוספת לצוות</span></h4>
+                    <h4>אין חברי צוות <span onClick={handleAdd}>לחצו להוספה לצוות</span></h4>
                 </div>
             )}
             {showAdd && <AddNewModal type={'team'} objectToAdd={TeamMateToAdd} addFunc={onAddNewTeamMate} setShowAdd={setShowAdd} team={team} />}

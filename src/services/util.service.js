@@ -70,7 +70,7 @@ function getDataFromUser(user, selectedMonth) {
     };
 }
 
-function stringToColor(str) {
+function stringToColor(str = 'undefiend') {
     if (!str) return '#999'
 
     // Normalize name

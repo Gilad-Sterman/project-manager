@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import AOS from 'aos'
 
 import { Signup } from './pages/Signup'
@@ -11,6 +11,7 @@ import { UserPreview } from './cmps/UserPreview'
 import { BoardPage } from './pages/BoardPage'
 import { AppHeader } from './cmps/AppHeader'
 import { Team } from './pages/Team'
+import { Items } from './pages/Items'
 
 function App() {
   const loggedUser = useSelector(storeState => storeState.userModule.user)
@@ -33,8 +34,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/settings/" element={<Settings />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/items" element={<Items />} />
             <Route path="/boards/:id" element={<BoardPage />} />
             <Route path="/" element={<Home />} />
+            <Route path="*" element={<Home />} />
             {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
         </section>

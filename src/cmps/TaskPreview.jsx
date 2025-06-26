@@ -67,7 +67,7 @@ export function TaskPreview({ task, myteam, onUpdate, onDelete }) {
                         const member = myteam.find(m => m._id === id)
                         return member ? (
                             <div key={id} className="avatar" style={{ backgroundColor: utilService.stringToColor(member._id) }}>
-                                {member.name.charAt(0)}
+                                {member.fName.charAt(0)}.{member.lName.charAt(0)}
                                 <button className="remove" onClick={(e) => { e.stopPropagation(); handleRemoveMember(id) }}>×</button>
                             </div>
                         ) : null
@@ -81,7 +81,7 @@ export function TaskPreview({ task, myteam, onUpdate, onDelete }) {
                             .filter(m => !task.teamMembers.includes(m._id))
                             .map(member => (
                                 <button key={member._id} style={{ backgroundColor: utilService.stringToColor(member._id) }} onClick={(e) => { e.stopPropagation(); handleAddMember(member._id) }}>
-                                    {member.name}
+                                    {member.fName} {member.lName}
                                 </button>
                             ))}
                     </div>
