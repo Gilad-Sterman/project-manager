@@ -1,0 +1,438 @@
+// ==========================================================================
+// ANIMATIONS & TRANSITIONS
+// Consistent styling for all animations and transitions
+// ==========================================================================
+
+// Base transition durations
+$transition-duration-fast: 150ms;
+$transition-duration-base: 300ms;
+$transition-duration-slow: 500ms;
+
+// Base transition timing functions
+$transition-timing-ease: ease;
+$transition-timing-linear: linear;
+$transition-timing-ease-in: ease-in;
+$transition-timing-ease-out: ease-out;
+$transition-timing-ease-in-out: ease-in-out;
+
+// Fade animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-20px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(20px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+// Slide animations
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+// Scale animations
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// Rotate animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes shake {
+  from,
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+// Loading animations
+@keyframes loading-dots {
+  0%, 80%, 100% { 
+    opacity: 0;
+  }
+  40% { 
+    opacity: 1;
+  }
+}
+
+@keyframes loading-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Animation utility classes
+.animate-fade-in {
+  animation: fadeIn $transition-duration-base $transition-timing-ease-in-out forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut $transition-duration-base $transition-timing-ease-in-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-slide-in-down {
+  animation: slideInDown $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-zoom-in {
+  animation: zoomIn $transition-duration-base $transition-timing-ease-out forwards;
+}
+
+.animate-zoom-out {
+  animation: zoomOut $transition-duration-base $transition-timing-ease-in forwards;
+}
+
+.animate-spin {
+  animation: spin $transition-duration-slow $transition-timing-linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse $transition-duration-slow $transition-timing-ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake $transition-duration-base $transition-timing-ease-in-out;
+}
+
+// Animation speed modifiers
+.animate-fast {
+  animation-duration: $transition-duration-fast !important;
+}
+
+.animate-slow {
+  animation-duration: $transition-duration-slow !important;
+}
+
+// Animation delay classes
+@for $i from 1 through 5 {
+  .animate-delay-#{$i} {
+    animation-delay: #{$i * 100}ms !important;
+  }
+}
+
+// Loading spinner component
+.loading-spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: text-bottom;
+  border: 0.2em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: loading-spinner $transition-duration-slow $transition-timing-linear infinite;
+  
+  &.loading-spinner-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+  }
+  
+  &.loading-spinner-lg {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-width: 0.25em;
+  }
+}
+
+// Loading dots component
+.loading-dots {
+  display: inline-flex;
+  align-items: center;
+  
+  &::after {
+    content: "...";
+    animation: loading-dots 1.4s infinite $transition-timing-ease-in-out both;
+    letter-spacing: 0.2em;
+  }
+}
+
+// Page transition container
+.page-transition-container {
+  position: relative;
+  
+  &.page-entering {
+    .page-content {
+      animation: fadeIn $transition-duration-base $transition-timing-ease-out forwards;
+    }
+  }
+  
+  &.page-exiting {
+    .page-content {
+      animation: fadeOut $transition-duration-base $transition-timing-ease-in forwards;
+    }
+  }
+}
+
+// Transition utilities
+.transition-base {
+  transition: all $transition-duration-base $transition-timing-ease-in-out;
+}
+
+.transition-fast {
+  transition: all $transition-duration-fast $transition-timing-ease-in-out;
+}
+
+.transition-slow {
+  transition: all $transition-duration-slow $transition-timing-ease-in-out;
+}
+
+.transition-none {
+  transition: none !important;
+}
+
+// Hover transition effects
+.hover-lift {
+  transition: transform $transition-duration-base $transition-timing-ease-out;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.hover-scale {
+  transition: transform $transition-duration-base $transition-timing-ease-out;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.hover-shadow {
+  transition: box-shadow $transition-duration-base $transition-timing-ease-out;
+  
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// RTL animation support
+[dir="rtl"] {
+  .animate-fade-in-left {
+    animation-name: fadeInRight;
+  }
+  
+  .animate-fade-in-right {
+    animation-name: fadeInLeft;
+  }
+  
+  .animate-slide-in-left {
+    animation-name: slideInRight;
+  }
+  
+  .animate-slide-in-right {
+    animation-name: slideInLeft;
+  }
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-fade-in,
+  .animate-fade-out,
+  .animate-fade-in-up,
+  .animate-fade-in-down,
+  .animate-fade-in-left,
+  .animate-fade-in-right,
+  .animate-slide-in-up,
+  .animate-slide-in-down,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-zoom-in,
+  .animate-zoom-out,
+  .animate-spin,
+  .animate-pulse,
+  .animate-shake {
+    animation: none !important;
+  }
+  
+  .loading-spinner {
+    animation: none !important;
+  }
+  
+  .loading-dots::after {
+    animation: none !important;
+    content: "...";
+  }
+  
+  .hover-lift:hover,
+  .hover-scale:hover {
+    transform: none !important;
+  }
+}

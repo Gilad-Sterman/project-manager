@@ -10,11 +10,18 @@ export function AddNewModal({ type = 'board', addFunc, objectToAdd, setShowAdd, 
     const [selectedItemIds, setSelectedItemIds] = useState([])
     const [showMsgModal, setShowMsgModal] = useState(false)
     const [newMembersInput, setNewMembersInput] = useState('')
+    const [itemType, setItemType] = useState('logistics')
+    const itemTypes = [{ title: 'נשקייה', value: 'armery' }, { title: 'אפסנאות', value: 'quartermaster' }, { title: 'לוגיסטיקה', value: 'logistics' },]
     const dispatch = useDispatch()
 
     function handleInput({ target }) {
         const value = target.type === 'number' ? +target.value : target.value
         setNewObject(prev => ({ ...prev, [target.name]: value }))
+    }
+
+    function handleItemTypeChange(value) {
+        setNewObject(objectToAdd)
+        setItemType(value)
     }
 
     function handleNewMembersInput({ target }) {
@@ -68,12 +75,9 @@ export function AddNewModal({ type = 'board', addFunc, objectToAdd, setShowAdd, 
 
         }
         if (type === "item") {
-            if (!newObject.name) {
-                showMsg('נא למלא את כל השדות')
-                return
-            }
             finalObj = {
                 ...newObject,
+                itemType
             }
         }
         addFunc(finalObj)
@@ -114,7 +118,7 @@ export function AddNewModal({ type = 'board', addFunc, objectToAdd, setShowAdd, 
             <button className="close-btn" onClick={() => setShowAdd(false)}>
                 <img src="https://res.cloudinary.com/dollaguij/image/upload/v1699194245/svg/x_ti24ab.svg" alt="close" />
             </button>
-            <h3>{type === 'task' ? 'הוספת משימה' : type === 'board' ? 'הוספת לוח פרוייקט' : type === 'task' ? 'הוספה לצוות' : 'הוספת פריט'}</h3>
+            <h3>{type === 'task' ? 'הוספת משימה' : type === 'board' ? 'הוספת לוח פרוייקט' : type === 'team' ? 'הוספה לצוות' : 'הוספת פריט'}</h3>
             {type === 'board' && <form>
                 <div className='dates'>
                     <label htmlFor="createdAt">תאריך יצירה: </label>
@@ -204,75 +208,133 @@ export function AddNewModal({ type = 'board', addFunc, objectToAdd, setShowAdd, 
                         onChange={handleInput}
                     />
                 </div>
-                <div className="my-input">
-                    <label htmlFor="fName">שם:</label>
-                    <input
-                        type='text'
-                        name="fName"
-                        id="fName"
-                        onChange={handleInput}
-                        required
-                    />
-                </div>
-                <div className="my-input">
-                    <label htmlFor="lName">שם משפחה:</label>
-                    <input
-                        type='text'
-                        name="lName"
-                        id="lName"
-                        onChange={handleInput}
-                        required
-                    />
-                </div>
-                <div className="my-input">
-                    <label htmlFor="pNum">מספר אישי:</label>
-                    <input
-                        type='text'
-                        name="pNum"
-                        id="pNum"
-                        onChange={handleInput}
-                        required
-                    />
-                </div>
-                <div className="my-input">
-                    <label htmlFor="idNum">ת.ז:</label>
-                    <input
-                        type='text'
-                        name="idNum"
-                        id="idNum"
-                        onChange={handleInput}
-                        required
-                    />
-                </div>
-                <div className="my-input">
-                    <label htmlFor="phone">טל':</label>
-                    <input
-                        type='phone'
-                        name="phone"
-                        id="phone"
-                        onChange={handleInput}
-                        required
-                    />
-                </div>
-                <div className="my-input">
-                    <label htmlFor="rank">דרגה:</label>
-                    <input
-                        type='text'
-                        name="rank"
-                        id="rank"
-                        onChange={handleInput}
-                        required
-                    />
-                </div>
-                <div className="my-input">
-                    <label htmlFor="role">תפקיד:</label>
-                    <input
-                        type='text'
-                        name="role"
-                        id="role"
-                        onChange={handleInput}
-                        required
-                    />
+                <div className='inputs'>
+                    <div className="my-input">
+                        <label htmlFor="fName">שם:</label>
+                        <input
+                            type='text'
+                            name="fName"
+                            id="fName"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="lName">שם משפחה:</label>
+                        <input
+                            type='text'
+                            name="lName"
+                            id="lName"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="pNum">מספר אישי:</label>
+                        <input
+                            type='text'
+                            name="pNum"
+                            id="pNum"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="idNum">ת.ז:</label>
+                        <input
+                            type='text'
+                            name="idNum"
+                            id="idNum"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="phone">טל':</label>
+                        <input
+                            type='phone'
+                            name="phone"
+                            id="phone"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="rank">דרגה:</label>
+                        <input
+                            type='text'
+                            name="rank"
+                            id="rank"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="role">תפקיד:</label>
+                        <input
+                            type='text'
+                            name="role"
+                            id="role"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="division">פלוגה:</label>
+                        <input
+                            type='text'
+                            name="division"
+                            id="division"
+                            onChange={handleInput}
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="team">צוות:</label>
+                        <input
+                            type='text'
+                            name="team"
+                            id="team"
+                            onChange={handleInput}
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="address">כתובת:</label>
+                        <input
+                            type='address'
+                            name="address"
+                            id="address"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="sadir">שירות בסדיר:</label>
+                        <input
+                            type='text'
+                            name="sadir"
+                            id="sadir"
+                            onChange={handleInput}
+                            required
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="email">מייל:</label>
+                        <input
+                            type='email'
+                            name="email"
+                            id="email"
+                            onChange={handleInput}
+                        />
+                    </div>
+                    <div className="my-input">
+                        <label htmlFor="carNum">מספר רכב:</label>
+                        <input
+                            type='number'
+                            name="carNum"
+                            id="carNum"
+                            onChange={handleInput}
+                        />
+                    </div>
                 </div>
                 <button className="btn-add" type="submit">הוספה</button>
             </form>}
@@ -332,7 +394,7 @@ export function AddNewModal({ type = 'board', addFunc, objectToAdd, setShowAdd, 
                             size={Math.min(5, items.length)}
                         >
                             {items.map(item => (
-                                <option key={item._id} value={item._id}>{item.name}</option>
+                                <option key={item._id} value={item._id}>{item.name || item.type}</option>
                             ))}
                         </select>
                     </div>
@@ -341,59 +403,122 @@ export function AddNewModal({ type = 'board', addFunc, objectToAdd, setShowAdd, 
             </form>}
             {type === 'item' && (
                 <form onSubmit={onAdd}>
-                    <div className="my-input">
-                        <label htmlFor="name">שם</label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            required
-                            value={newObject.name}
-                            onChange={handleInput}
-                        />
+                    <div className="item-type-select">
+                        {itemTypes.map(type => (
+                            <>
+                                <span className={itemType === type.value ? 'selected' : ''} onClick={() => handleItemTypeChange(type.value)} key={type.value} value={type.value}>{type.title}</span> |
+                            </>
+                        ))}
                     </div>
-
-                    <div className="my-input">
-                        <label htmlFor="type">סוג פריט</label>
-                        <input
-                            type="text"
-                            name="type"
-                            id="type"
-                            placeholder="בחר או כתוב סוג חדש"
-                            value={newObject.type}
-                            onChange={handleInput}
-                            list="item-type-list"
-                        />
-                        {/* Optional: populate with existing types */}
-                        <datalist id="item-type-list">
-                            {Array.from(new Set(team.flatMap(member => member.type ? [member.type] : []))).map((typeOption, idx) => (
-                                <option key={idx} value={typeOption} />
-                            ))}
-                        </datalist>
-                    </div>
-                    <div className="my-input">
-                        <label htmlFor="division">מחלקה</label>
-                        <input
-                            type="text"
-                            name="division"
-                            id="division"
-                            value={newObject.division}
-                            onChange={handleInput}
-                        />
-                    </div>
-
-                    <div className="my-input">
-                        <label htmlFor="quantity">כמות</label>
-                        <input
-                            type="number"
-                            name="quantity"
-                            id="quantity"
-                            value={newObject.quantity}
-                            onChange={handleInput}
-                            min="1"
-                        />
-                    </div>
-
+                    {itemType === 'armery' &&
+                        <>
+                            <div className="my-input">
+                                <label htmlFor="category">קטגוריה</label>
+                                <input
+                                    type="text"
+                                    name="category"
+                                    id="category"
+                                    placeholder="בחר או כתוב סוג חדש"
+                                    value={newObject.category}
+                                    onChange={handleInput}
+                                    list="item-category-list"
+                                />
+                                <datalist id="item-category-list">
+                                    {Array.from(new Set(team.flatMap(member => member.category ? [member.category] : []))).map((typeOption, idx) => (
+                                        <option key={idx} value={typeOption} />
+                                    ))}
+                                </datalist>
+                            </div>
+                            <div className="my-input">
+                                <label htmlFor="type">סוג</label>
+                                <input
+                                    type="text"
+                                    name="type"
+                                    id="type"
+                                    required
+                                    value={newObject.type}
+                                    onChange={handleInput}
+                                />
+                            </div>
+                            <div className="my-input">
+                                <label htmlFor="tzNum">מספר צ'</label>
+                                <input
+                                    type="text"
+                                    name="tzNum"
+                                    id="tzNum"
+                                    value={newObject.tzNum}
+                                    onChange={handleInput}
+                                />
+                            </div>
+                        </>
+                    }
+                    {itemType === 'quartermaster' &&
+                        <>
+                            <div className="my-input">
+                                <label htmlFor="category">קטגוריה</label>
+                                <input
+                                    type="text"
+                                    name="category"
+                                    id="category"
+                                    placeholder="בחר או כתוב סוג חדש"
+                                    value={newObject.category}
+                                    onChange={handleInput}
+                                    list="item-category-list"
+                                />
+                                <datalist id="item-category-list">
+                                    {Array.from(new Set(team.flatMap(member => member.category ? [member.category] : []))).map((typeOption, idx) => (
+                                        <option key={idx} value={typeOption} />
+                                    ))}
+                                </datalist>
+                            </div>
+                            <div className="my-input">
+                                <label htmlFor="type">סוג</label>
+                                <input
+                                    type="text"
+                                    name="type"
+                                    id="type"
+                                    required
+                                    value={newObject.type}
+                                    onChange={handleInput}
+                                />
+                            </div>
+                            <div className="my-input">
+                                <label htmlFor="details">פירוט</label>
+                                <textarea
+                                    type="text"
+                                    name="details"
+                                    id="details"
+                                    value={newObject.details}
+                                    onChange={handleInput}
+                                />
+                            </div>
+                        </>
+                    }
+                    {itemType === 'logistics' &&
+                        <>
+                            <div className="my-input">
+                                <label htmlFor="name">שם</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    required
+                                    value={newObject.name}
+                                    onChange={handleInput}
+                                />
+                            </div>
+                            <div className="my-input">
+                                <label htmlFor="details">פירוט</label>
+                                <textarea
+                                    type="text"
+                                    name="details"
+                                    id="details"
+                                    value={newObject.details}
+                                    onChange={handleInput}
+                                />
+                            </div>
+                        </>
+                    }
                     <button className="btn-add" type="submit">הוספה</button>
                 </form>
             )}

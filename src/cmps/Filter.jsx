@@ -1,72 +1,138 @@
-import { useState } from "react"
-import { projectStages } from "../services/board.service"
-import { ArrowBigDownIcon, ArrowBigUpIcon } from "lucide-react"
+import { useState, useRef, useEffect } from 'react';
+import { projectStages } from '../services/board.service';
+import { ChevronDown, Search, ArrowUp, ArrowDown, Check } from 'lucide-react';
 
-export function Filter({ filterBy, setFilterBy, type, selectOptions, expenseTypes }) {
-    const [showMaxInv, setShowMaxInv] = useState(false)
-    const [isSelect, setIsSelect] = useState(false)
-    const { from, to, maxNum, sortBy, sortDir } = filterBy
-    const paymentTypes = [{ title: 'מזומן', value: 'cash' }, { title: 'אשראי', value: 'card' }, { title: 'העברה בנקאית', value: 'transfer' }, { title: 'אחר', value: 'other' },]
+export function Filter({ filterBy, setFilterBy, type, selectOptions }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const [sections, setSections] = useState({ status: true, sort: false });
+    const filterRef = useRef(null);
 
-    function setNewFilter({ target }) {
-        setIsSelect(false)
-        const field = target.name
-        const value = target.value
-        filterBy[field] = (target.type === 'number') ? +value : value
-        const newFilter = JSON.parse(JSON.stringify(filterBy))
-        setFilterBy(newFilter)
+    const { sortBy, sortDir } = filterBy;
+    const itemTypes = [{ title: 'נשקייה', value: 'armery' }, { title: 'אפסנאות', value: 'quartermaster' }, { title: 'לוגיסטיקה', value: 'logistics' }];
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (filterRef.current && !filterRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [filterRef]);
+
+    function handleFilterChange(field, value) {
+        setFilterBy(prevFilter => ({ ...prevFilter, [field]: value }));
     }
 
-    function setStages(stage) {
-        let newStages = []
-        if (filterBy.selectedStages.includes(stage)) {
-            newStages = filterBy.selectedStages.filter(s => stage !== s)
-        } else {
-            newStages = [...filterBy.selectedStages, stage]
-        }
-        filterBy.selectedStages = newStages
-        const newFilter = JSON.parse(JSON.stringify(filterBy))
-        setFilterBy(newFilter)
+    function handleMultiSelectChange(field, value) {
+        const currentValues = filterBy[field] || [];
+        const newValues = currentValues.includes(value)
+            ? currentValues.filter(v => v !== value)
+            : [...currentValues, value];
+        handleFilterChange(field, newValues);
+    }
+
+    function toggleSection(section) {
+        setSections(prev => ({ ...prev, [section]: !prev[section] }));
     }
 
     return (
-        <section className="filter">
-            <span className="tag">אפשרויות סינון</span>
-            <section className="search-input">
-                <label htmlFor="txt">
-                    <img src="https://res.cloudinary.com/dollaguij/image/upload/v1701785795/wednesday/ztavmltqyl9th2ndasir.svg" alt="" />
-                </label>
-                <input type="text" name="txt" id="txt" placeholder="חיפוש" onInput={setNewFilter} />
-            </section>
-            {type === 'board' && <>
-                <section className="stage-filter">
-                    {projectStages.map(stage =>
-                        <span key={stage.value} className={filterBy.selectedStages?.includes(stage.value) ? 'selected' : ''} onClick={() => setStages(stage.value)}>{stage.title}</span>
-                    )}
-                </section>
-            </>}
-            {selectOptions && <section className="sort">
-                <span>סינון לפי:</span>
-                <button onClick={() => setIsSelect(!isSelect)}>
-                    {selectOptions.find(option => option.value === sortBy).title}
-                </button>
-                <button className="sortDir" onClick={() => setNewFilter({ target: { name: 'sortDir', value: sortDir === 1 ? -1 : 1 } })}>
-                    {sortDir === 1 ? (
-                        <ArrowBigUpIcon size={18} />
-                    ) : (
-                        <ArrowBigDownIcon size={18} />
-                    )}
-                </button>
-                {isSelect && <section className="select-modal">
-                    {selectOptions.map((option, idx) =>
-                        <div key={idx} className={`select-option`}
-                            onClick={() => setNewFilter({ target: { name: 'sortBy', value: option.value } })}><span>{option.title}</span>
-                            {(filterBy.sortBy === option.value) &&
-                                <img className={"checked-svg-img"} src="https://res.cloudinary.com/dollaguij/image/upload/v1699194254/svg/checked_paj0fg.svg" alt="" />
-                            }
-                        </div>)}
-                </section>}
-            </section>}
-        </section>
-    )
+        <div className="filter-container" ref={filterRef}>
+            <button className="filter-trigger" onClick={() => setIsOpen(!isOpen)}>
+                <span>סינון</span>
+                <ChevronDown size={20} />
+            </button>
+
+            {isOpen && (
+                <div className="filter-panel">
+                    <div className="filter-header">
+                        <h4>סינון ומיון</h4>
+                    </div>
+                    <div className="filter-body">
+                        <div className="search-section">
+                            <Search size={18} className="search-icon" />
+                            <input
+                                type="text"
+                                placeholder="חיפוש לפי שם..."
+                                value={filterBy.txt || ''}
+                                onChange={(e) => handleFilterChange('txt', e.target.value)}
+                            />
+                        </div>
+
+                        {type === 'board' && (
+                            <div className="filter-section">
+                                <button className="section-header" onClick={() => toggleSection('status')}>
+                                    <span>סטטוס</span>
+                                    <ChevronDown size={18} className={`chevron ${sections.status ? 'open' : ''}`} />
+                                </button>
+                                {sections.status && (
+                                    <div className="section-content">
+                                        {projectStages.map(stage => (
+                                            <label key={stage.value} className="checkbox-label">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={filterBy.selectedStages?.includes(stage.value) || false}
+                                                    onChange={() => handleMultiSelectChange('selectedStages', stage.value)}
+                                                />
+                                                <span className={`custom-checkbox ${stage.value}`}></span>
+                                                {stage.title}
+                                            </label>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {type === 'items' && (
+                            <div className="filter-section">
+                                <button className="section-header" onClick={() => toggleSection('itemType')}>
+                                    <span>סוג פריט</span>
+                                    <ChevronDown size={18} className={`chevron ${sections.itemType ? 'open' : ''}`} />
+                                </button>
+                                {sections.itemType && (
+                                    <div className="section-content">
+                                        {itemTypes.map(type => (
+                                            <label key={type.value} className="checkbox-label">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={filterBy.selectedTypes?.includes(type.value) || false}
+                                                    onChange={() => handleMultiSelectChange('selectedTypes', type.value)}
+                                                />
+                                                <span className={`custom-checkbox ${type.value}`}></span>
+                                                {type.title}
+                                            </label>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {selectOptions && (
+                            <div className="filter-section">
+                                <button className="section-header" onClick={() => toggleSection('sort')}>
+                                    <span>מיון</span>
+                                    <ChevronDown size={18} className={`chevron ${sections.sort ? 'open' : ''}`} />
+                                </button>
+                                {sections.sort && (
+                                    <div className="section-content">
+                                        <div className="sort-options">
+                                            <span>מיין לפי:</span>
+                                            <select value={sortBy} onChange={(e) => handleFilterChange('sortBy', e.target.value)}>
+                                                {selectOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.title}</option>)}
+                                            </select>
+                                            <button onClick={() => handleFilterChange('sortDir', sortDir === 1 ? -1 : 1)} className="sort-direction">
+                                                {sortDir === 1 ? <ArrowUp size={16}/> : <ArrowDown size={16}/>}
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 }

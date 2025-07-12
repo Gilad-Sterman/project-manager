@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { MySelect } from './MySelect'
 import { projectStages } from '../services/board.service'
-import { Trash, Edit, Plus, X, Save } from 'lucide-react'
+import { Trash, Edit, Plus, X, Save, CalendarIcon } from 'lucide-react'
 import { utilService } from '../services/util.service'
 
-export function TaskPreview({ task, myteam, onUpdate, onDelete }) {
+export function TaskPreview({ task, myteam, onUpdate, onDelete, myItems }) {
     const [isExpanded, setIsExpanded] = useState(false)
     const [editTask, setEditTask] = useState({ ...task })
     const [isEditing, setIsEditing] = useState(false)
@@ -52,40 +52,38 @@ export function TaskPreview({ task, myteam, onUpdate, onDelete }) {
         setIsEditing(false)
     }
 
+    const isOverdue = new Date(task.deadline) < new Date() && task.stage !== 'done';
+
     return (
-        <div className={`task-preview ${isExpanded ? 'expanded' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-            <div className="top">
+        <div className={`task-preview ${task.stage}`} onClick={() => setIsExpanded(!isExpanded)}>
+            <div className="task-header">
                 <h4>{task.name}</h4>
-                <div className={`stage-select ${task.stage}`} onClick={ev => ev.stopPropagation()}>
-                    <MySelect options={projectStages} selected={task.stage} setSelected={handleStageChange} />
-                </div>
+                <button className="edit-btn" onClick={(e) => { e.stopPropagation(); setIsEditing(!isEditing) }}><Edit size={16} /></button>
             </div>
 
-            <div className="members">
-                <section className='task-members'>
+            <div className="task-body">
+                <p>{task.description}</p>
+            </div>
+
+            <div className="progress-bar-container">
+                <div className="progress-bar"></div>
+            </div>
+
+            <div className="task-footer">
+                <div className="members">
                     {task.teamMembers.map(id => {
                         const member = myteam.find(m => m._id === id)
                         return member ? (
-                            <div key={id} className="avatar" style={{ backgroundColor: utilService.stringToColor(member._id) }}>
-                                {member.fName.charAt(0)}.{member.lName.charAt(0)}
-                                <button className="remove" onClick={(e) => { e.stopPropagation(); handleRemoveMember(id) }}>×</button>
+                            <div key={id} className="avatar" title={`${member.fName} ${member.lName}`} style={{ backgroundColor: utilService.stringToColor(member._id) }}>
+                                {member.fName.charAt(0)}{member.lName.charAt(0)}
                             </div>
                         ) : null
                     })}
-                </section>
-                {/* Quick Add Member */}
-                {isExpanded && (
-                    <div className="add-member">
-                        {!!myteam.filter(m => !task.teamMembers.includes(m._id)).length && <span>הוספה:</span>}
-                        {myteam
-                            .filter(m => !task.teamMembers.includes(m._id))
-                            .map(member => (
-                                <button key={member._id} style={{ backgroundColor: utilService.stringToColor(member._id) }} onClick={(e) => { e.stopPropagation(); handleAddMember(member._id) }}>
-                                    {member.fName} {member.lName}
-                                </button>
-                            ))}
-                    </div>
-                )}
+                </div>
+                <div className={`due-date ${isOverdue ? 'overdue' : ''}`}>
+                    <CalendarIcon size={16} />
+                    <span>{utilService.formatDate(task.deadline)}</span>
+                </div>
             </div>
 
             {isExpanded && (
@@ -135,10 +133,14 @@ export function TaskPreview({ task, myteam, onUpdate, onDelete }) {
                         </>
                     ) : (
                         <>
-                            <p>{task.description}</p>
+                            {task.items.length > 0 && <span>פריטים: </span>}
+                            <ul className='task-items clean-list'>
+                                {task.items.map(item => <li key={item}>
+                                    {myItems.find(i => i._id === item)?.type || myItems.find(i => i._id === item)?.name}
+                                </li>)}
+                            </ul>
                             <p>צפי סיום: {task.deadline}</p>
                             {!!task.completionDate && <p>תאריך סיום: {task.completionDate}</p>}
-                            <button onClick={(e) => { e.stopPropagation(); setIsEditing(true) }}><Edit size={16} /> עריכה</button>
                         </>
                     )}
                 </div>

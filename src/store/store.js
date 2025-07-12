@@ -8,21 +8,40 @@ import { boards, staff, items } from '../services/demoData.service'
 
 // Storage helpers
 const STORAGE_KEY = 'appState'
+const DATA_VERSION = '2.0' // Increment this when you want to reset data
 
 function saveState(state) {
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+  const stateWithVersion = {
+    ...state,
+    dataVersion: DATA_VERSION
+  }
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(stateWithVersion))
 }
 
 function loadState() {
   const stored = sessionStorage.getItem(STORAGE_KEY)
-  if (stored) return JSON.parse(stored)
+  
+  if (stored) {
+    const parsedState = JSON.parse(stored)
+    
+    // Check if stored data version matches current version
+    if (parsedState.dataVersion === DATA_VERSION) {
+      return parsedState
+    } else {
+      console.log('Data version mismatch, loading fresh demo data')
+      // Clear old data when version doesn't match
+      sessionStorage.removeItem(STORAGE_KEY)
+    }
+  }
 
+  // Return fresh demo data
   return {
     boardModule: { boards: boards },
     staffModule: { staff: staff },
     itemModule: { items: items },
-    taskModule: { tasks: [] }, // if tasks are separate from boards, otherwise you can remove this
-    userModule: { user: null }, // adjust based on your actual shape
+    taskModule: { tasks: [] },
+    userModule: { user: null },
+    dataVersion: DATA_VERSION
   }
 }
 

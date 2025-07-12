@@ -5,14 +5,15 @@ export const teamService = {
 function loadTeam(team, filterBy) {
     const { txt = '', sortBy = 'name', sortDir = 1 } = filterBy
 
-    const normalize = str => str.trim().toLowerCase()
+    const normalize = str => str ? str.trim().toLowerCase() : ''
 
     let filteredTeam = [...team]
 
     if (txt) {
         const normTxt = normalize(txt)
-        filteredTeam = filteredTeam.filter(board =>
-            normalize(board.name).includes(normTxt)
+        filteredTeam = filteredTeam.filter(member =>
+            normalize(member.fName).includes(normTxt) ||
+            normalize(member.lName).includes(normTxt)
         )
     }
 

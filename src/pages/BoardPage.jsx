@@ -178,11 +178,28 @@ export function BoardPage() {
                 <h2>הלוח לא נמצא, נא לנסות שוב</h2>
             ) : (<>
                 <section className="top">
-                    {!isEdit && <h2>{myBoard.name}</h2>}
-                    {!isEdit && <p>דורש הפרוייקט: {myBoard.requestedBy}</p>}
-                    {myBoard.description && !isEdit && <p className="description">
-                        {myBoard.description}
-                    </p>}
+                    <div className="board-header">
+                        {!isEdit && <h2>{myBoard.name}</h2>}
+                        {!isEdit && <p>דורש הפרוייקט: {myBoard.requestedBy}</p>}
+                        {myBoard.description && !isEdit && <p className="description">
+                            {myBoard.description}
+                        </p>}
+                    </div>
+
+                    <div className="board-top-actions">
+                        <button className="btn-delete" onClick={() => onDeleteBoard()}><Trash2 size={18} /></button>
+                        {!isEdit && <button className="btn-edit" onClick={() => setIsEdit(!isEdit)}>
+                            <Edit3 size={18} />
+                        </button>}
+                        {isEdit && <button className="btn-save" onClick={() => onSaveBoard()}> <Save size={18} /> </button>}
+                        <button className="btn-add-from-team" onClick={() => setShowTeam(!showTeam)}>
+                            הוספת חברי צוות
+                        </button>
+                        <button className="btn-add-item" onClick={() => setShowItems(!showItems)}>
+                            הוספת פריטים
+                        </button>
+                    </div>
+
                     {isEdit && <section className="edit-top">
                         <input
                             type="text"
@@ -209,16 +226,6 @@ export function BoardPage() {
                             onInput={handleInput}
                         />
                     </section>}
-                    <button className="btn-delete" onClick={() => onDeleteBoard()}><Trash2 /></button>
-                    {!isEdit && <button className="btn-edit" onClick={() => setIsEdit(!isEdit)}>
-                        <Edit3 />
-                    </button>}
-                    {isEdit && <button className="btn-save" onClick={() => onSaveBoard()}>
-                        <Save />
-                    </button>}
-                    <button className="btn-add-from-team" onClick={() => setShowTeam(!showTeam)}>
-                        הוספת חברי צוות
-                    </button>
 
                     {showTeam && team.filter(member => !myBoard.staffMembers.includes(member._id)).length > 0 && (
                         <section className="add-team-select">
@@ -236,16 +243,12 @@ export function BoardPage() {
                         <p className="all-added-msg">כל הצוות כבר משויך ללוח</p>
                     )}
 
-                    <button className="btn-add-item" onClick={() => setShowItems(!showItems)}>
-                        הוספת  פריטים
-                    </button>
-
                     {showItems && items.filter(item => !myBoard.items.includes(item._id)).length > 0 && (
                         <section className="add-item-select">
                             <select multiple onChange={handleItemSelection}>
                                 {items.filter(item => !myBoard.items.includes(item._id)).map(item => (
                                     <option key={item._id} value={item._id}>
-                                        {item.name}
+                                        {item.name || item.type}
                                     </option>
                                 ))}
                             </select>
@@ -256,38 +259,47 @@ export function BoardPage() {
                         <p className="all-added-msg">כל הפריטים כבר משוייכים ללוח</p>
                     )}
                 </section>
+
                 <section className="board-actions">
                     <div className="staff">
-                        צוות:
-                        {myBoard.staffMembers?.map(member =>
-                             <span key={member} style={{ backgroundColor: utilService.stringToColor(member) }}>{team.find(mem => mem._id === member)?.fName} {team.find(mem => mem._id === member)?.lName}</span>
-                        )}
+                        <span className="action-label">צוות</span>
+                        <div className="pills-container">
+                            {myBoard.staffMembers?.map(member =>
+                                <span key={member} style={{ backgroundColor: utilService.stringToColor(member) }}>{team.find(mem => mem._id === member)?.fName} {team.find(mem => mem._id === member)?.lName}</span>
+                            )}
+                        </div>
                     </div>
                     <div className="stage">
-                        סטטוס:
+                        <span className="action-label">סטטוס:</span>
                         <MySelect options={projectStages} selected={myBoard.stage} setSelected={onSelectStage} />
                     </div>
-                    <span>אחראי: {myBoard.manager?.fName} {myBoard.manager?.lName}</span>
+                    <div className="manager">
+                        <span className="action-label">אחראי</span>
+                        <span>{myBoard.manager?.fName} {myBoard.manager?.lName}</span>
+                    </div>
                     <div className="items">
-                        פריטים:
-                        {myBoard.items?.map(item =>
-                            <span key={item}>{items.find(i => i._id === item)?.name}</span>
-                        )}
+                        <span className="action-label">פריטים</span>
+                        <div className="pills-container">
+                            {myBoard.items?.map(item =>
+                                <span key={item}>{items.find(i => i._id === item)?.type || items.find(i => i._id === item)?.name}</span>
+                            )}
+                        </div>
                     </div>
                     <div className="dates">
+                        <span className="action-label">תאריכים</span>
                         <span>תאריך יצירה: {myBoard.createdAt}</span>
                         <span>צפי סיום: {myBoard.deadline}</span>
                         {!!myBoard.completionDate && <span>סיום בפועל: {myBoard.completionDate}</span>}
                     </div>
                     <button className="btn-add" onClick={() => setShowAdd(!showAdd)}>הוספת משימה</button>
                 </section>
+
                 <section className="tasks">
                     {myBoard.tasks.length > 0 && myBoard.tasks.map((task, idx) =>
-                        <TaskPreview key={idx} task={task} myteam={myteam} onUpdate={onUpdateTask} onDelete={onDeleteTask} />
+                        <TaskPreview key={idx} task={task} myteam={myteam} onUpdate={onUpdateTask} onDelete={onDeleteTask} myItems={myItems} />
                     )}
                 </section>
-            </>
-            )}
+            </>)}
             {showAdd && <AddNewModal type={'task'} objectToAdd={taskToAdd} addFunc={onAddNewTask} setShowAdd={setShowAdd} team={myteam} items={myItems} />}
         </section>
     )

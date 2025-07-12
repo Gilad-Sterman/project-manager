@@ -1,18 +1,38 @@
-// SETUP
+@import "tailwindcss";
+
+// ==========================================================================
+// MAIN STYLESHEET
+// Imports all style components for the project
+// ==========================================================================
+
+// SETUP - Variables, mixins, and other style setup
+// ==========================================================================
 @import 'setup/typography';
 @import 'setup/variables';
 @import 'setup/mixins';
 @import 'setup/functions';
 
-// BASICS
-@import 'base/helpers';
-@import 'base/base';
-@import 'base/layout';
+// BASE - Core styles and utilities
+// ==========================================================================
+@import 'base/typography';   // Typography styles
+@import 'base/utilities';    // Utility classes
+@import 'base/helpers';      // Helper classes
+@import 'base/base';         // Base element styles
+@import 'base/layout';       // Layout grid and containers
+@import 'base/buttons';      // Button styles
+@import 'base/forms';        // Form element styles
+@import 'base/alerts';       // Alert and notification styles
+@import 'base/tables';       // Table and data display styles
+@import 'base/animations';   // Animations and transitions
+@import 'base/icons';        // Icons and iconography
+@import 'base/cards';        // Cards and containers
+@import 'base/modals';       // Modals and dialogs
 
-// COMPONENTS
+// COMPONENTS - Reusable component styles
+// ==========================================================================
 @import 'cmps/AppHeader';
 @import 'cmps/BoardPreview';
-@import 'cmps/TeamPreview';
+@import 'cmps/MemberPreview';
 @import 'cmps/TaskPreview';
 @import 'cmps/UserPreview';
 @import 'cmps/ProductSelect';
@@ -21,7 +41,8 @@
 @import 'cmps/Filter';
 @import 'cmps/AddNewModal';
 
-// PAGES
+// PAGES - Page-specific styles
+// ==========================================================================
 @import 'pages/Home';
 @import 'pages/BoardPage';
 @import 'pages/Team';

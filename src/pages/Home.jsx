@@ -11,16 +11,16 @@ import { useNavigate } from 'react-router-dom'
 import { Filter } from '../cmps/Filter'
 
 export function Home() {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const boards = useSelector(state => state.boardModule.boards)
-    const team = useSelector(state => state.staffModule.staff)
+    const boards = useSelector(state => state.boardModule.boards);
+    const team = useSelector(state => state.staffModule.staff);
 
-    const [filterBy, setFilterBy] = useState({ txt: '', selectedStages: [], sortBy: 'name', sortDir: 1 })
-    const [myBoards, setMyBoards] = useState(boards)
-    const sortOptions = [{ value: 'name', title: 'שם' }, { value: 'createdAt', title: 'תאריך יצירה' }, { value: 'deadline', title: 'תאריך סיום' },]
-    const [showAdd, setShowAdd] = useState(false)
+    const [filterBy, setFilterBy] = useState({ txt: '', selectedStages: [], sortBy: 'name', sortDir: 1 });
+    const [myBoards, setMyBoards] = useState(boards);
+    const sortOptions = [{ value: 'name', title: 'שם' }, { value: 'createdAt', title: 'תאריך יצירה' }, { value: 'deadline', title: 'תאריך סיום' }];
+    const [showAdd, setShowAdd] = useState(false);
     const boardToAdd = {
         _id: utilService.generateRandomId(),
         name: '',
@@ -34,76 +34,106 @@ export function Home() {
         requestedBy: '',
         staffMembers: [],
         items: []
-    }
+    };
 
     useEffect(() => {
-        onSetMyBoards()
-    }, [filterBy, boards])
+        onSetMyBoards();
+    }, [filterBy, boards]);
 
     function onSetMyBoards() {
-        const filtered = boardService.loadBoards(boards, filterBy)
-        setMyBoards(filtered)
+        const filtered = boardService.loadBoards(boards, filterBy);
+        setMyBoards(filtered);
     }
 
-
     function handleAdd(ev) {
-        ev.stopPropagation()
-        setShowAdd(!showAdd)
+        ev.stopPropagation();
+        setShowAdd(!showAdd);
     }
 
     async function onAddNewBoard(newBoard) {
         try {
-            dispatch(addBoard(newBoard))
-            setShowAdd(false)
+            dispatch(addBoard(newBoard));
+            setShowAdd(false);
         } catch (err) {
             console.log(err);
         }
     }
 
+    const renderBoards = () => {
+        if (!boards || boards.length === 0) {
+            return (
+                <div className='no-boards-placeholder'>
+                    <h3>אין פרוייקטים עדיין.</h3>
+                    <p>לחץ על הכפתור כדי להוסיף את הלוח הראשון שלך.</p>
+                    <button onClick={handleAdd} className='btn-primary'>הוסף לוח חדש</button>
+                </div>
+            );
+        }
+
+        if (myBoards.length === 0) {
+            return (
+                <div className='no-boards-match'>
+                    <h4>לא נמצאו לוחות התואמים את חיפושך.</h4>
+                </div>
+            );
+        }
+
+        return (
+            <div className='board-grid'>
+                {myBoards.map(board => (
+                    <BoardPreview key={board._id} board={board} team={team} />
+                ))}
+            </div>
+        );
+    };
+
     return (
-        <div className="home" onClick={() => setShowAdd(false)}>
-            <h1>הפרוייקטים שלך</h1>
-            <button onClick={handleAdd} className='btn-add'>
-                הוספת לוח פרוייקט
-            </button>
-            {boards?.length > 0 && <Filter filterBy={filterBy} setFilterBy={setFilterBy} type={'board'} selectOptions={sortOptions} />}
-            {boards?.length > 0 && myBoards?.length > 0 ? (<>
-                <div className='board-container'>
-                    {myBoards?.map(board => (
-                        <BoardPreview key={board._id} board={board} />
-                    ))}
+        <div className="home-page" onClick={() => setShowAdd(false)}>
+            <aside className="home-sidebar">
+                <div className="sidebar-header">
+                    <h3>סקירת פרוייקטים</h3>
                 </div>
-                <div className='info'>
-                    <h4>מספר פרוייקטים: <span>{boards.length}</span></h4>
-                    <ul className='stages-info clean-list'>
-                        {projectStages.map(stage =>
-                            boards.filter(board => board.stage === stage.value).length > 0 && <li key={stage.value} className={stage.value}>{stage.title}: {boards.filter(board => board.stage === stage.value).length}</li>
-                        )}
+                <div className="sidebar-stats">
+                    <div className="stat-item">
+                        <span className="stat-value">{boards?.length || 0}</span>
+                        <div className="stat-label">כל הפרוייקטים</div>
+                    </div>
+                    <div className="stat-item">
+                        <span className="stat-value">{team?.length || 0}</span>
+                        <div className="stat-label">אנשי צוות</div>
+                    </div>
+                </div>
+                <div className="sidebar-stages">
+                    <h4>פרוייקטים לפי סטטוס</h4>
+                    <ul className='clean-list'>
+                        {projectStages.map(stage => {
+                            const count = boards?.filter(b => b.stage === stage.value).length || 0;
+                            if (count === 0) return null;
+                            return (
+                                <li key={stage.value} className={`stage-item ${stage.value}`}>
+                                    <span className='stage-name'>{stage.title}</span>
+                                    <span className='stage-count'>{count}</span>
+                                </li>
+                            );
+                        })}
                     </ul>
-                    <h4 onClick={() => navigate('/team')}>מספר חברי צוות: <span>{team.length}</span></h4>
                 </div>
-            </>
-            ) : boards?.length > 0 ? (
-                <>
-                    <div className='no-boards-match'>
-                        <h4>לא נמצאו לוחות תואמים לחיפוש </h4>
+            </aside>
+
+            <main className="home-main-content">
+                <header className="main-header">
+                    <h1>הפרוייקטים שלי</h1>
+                    <div className="header-actions">
+                        <Filter filterBy={filterBy} setFilterBy={setFilterBy} type={'board'} selectOptions={sortOptions} />
+                        <button onClick={handleAdd} className='btn-primary'>
+                            הוסף לוח
+                        </button>
                     </div>
-                    <div className='info'>
-                        <h4>מספר פרוייקטים: <span>{boards.length}</span></h4>
-                        <ul className='stages-info clean-list'>
-                            {projectStages.map(stage =>
-                                boards.filter(board => board.stage === stage.value).length > 0 && <li key={stage.value} className={stage.value}>{stage.title}: {boards.filter(board => board.stage === stage.value).length}</li>
-                            )}
-                        </ul>
-                        <h4 onClick={() => navigate('/team')}>מספר חברי צוות: <span>{team.length}</span></h4>
-                    </div>
-                </>
-            ) : (
-                <div className='no-boards'>
-                    <h4>אין לוחות פרוייקטים <span onClick={handleAdd}>לחצו להוספת לוח חדש</span></h4>
-                </div>
-            )}
+                </header>
+                {renderBoards()}
+            </main>
+
             {showAdd && <AddNewModal type={'board'} objectToAdd={boardToAdd} addFunc={onAddNewBoard} setShowAdd={setShowAdd} team={team} />}
         </div>
-    )
+    );
 }

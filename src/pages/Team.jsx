@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { teamService } from "../services/team.service"
-import { TeamPreview } from "../cmps/TeamPreview"
+import { MemberPreview } from "../cmps/MemberPreview"
 import { Filter } from "../cmps/Filter"
 import { utilService } from "../services/util.service"
 import { addStaffMember, deleteStaffMemeber, updateStaffMember } from "../store/staff.actions"
@@ -29,6 +29,11 @@ export function Team() {
         role: '',
         draftDate: '',
         division: '',
+        team: '',
+        address: '',
+        email: '',
+        sadir: '',
+        carNum: '', 
         createdAt: new Date().toISOString().split('T')[0],
     }
 
@@ -103,14 +108,14 @@ export function Team() {
     return (
         <section className="team-page" >
             <h1>הצוות שלך</h1>
+            {team?.length > 0 && <Filter filterBy={filterBy} setFilterBy={setFilterBy} type={'team'} selectOptions={sortOptions} />}
             <button onClick={handleAdd} className='btn-add'>
                 הוספה לצוות
             </button>
-            {team?.length > 0 && <Filter filterBy={filterBy} setFilterBy={setFilterBy} type={'team'} selectOptions={sortOptions} />}
             {myTeam.length > 0 ? (
                 <div className='teammates-container'>
                     {myTeam.map(teamMemeber => (
-                        <TeamPreview key={teamMemeber._id} member={teamMemeber} onDelete={onDeleteTeamMate} onEdit={onEditTeamMate} boards={boards} />
+                        <MemberPreview key={teamMemeber._id} member={teamMemeber} onDelete={onDeleteTeamMate} onEdit={onEditTeamMate} boards={boards} />
                     ))}
                 </div>
             ) : team?.length > 0 ? (

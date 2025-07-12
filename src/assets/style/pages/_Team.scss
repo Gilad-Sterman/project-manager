@@ -1,76 +1,142 @@
 .team-page {
-  padding: 2rem;
+  padding: $spacing-md;
   background-color: $clr-bg;
   color: $clr-txt;
   min-height: 100vh;
+  max-width: 1600px;
+  margin: 0 auto;
+
+  @include respond-to('md') {
+    padding: $spacing-lg;
+  }
+
+  @include respond-to('lg') {
+    padding: $spacing-xl;
+  }
 
   h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: $fs-h3;
+    margin-bottom: $spacing-md;
     color: $clr-header;
+    font-weight: $fw-bold;
+
+    @include respond-to('md') {
+      font-size: $fs-h2;
+    }
   }
 
   .btn-add {
     background-color: $clr-primary;
     color: #fff;
     border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 0.4rem;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-lg;
     cursor: pointer;
-    transition: background-color 0.3s;
-    margin-bottom: 2rem;
+    font-weight: $fw-semibold;
+    font-size: $fs-body;
+    margin-bottom: $spacing-lg;
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    transition: $transition-base;
+    box-shadow: $shadow-md;
 
     &:hover {
       background-color: darken($clr-primary, 8%);
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 
   .info {
     background-color: $clr-section-blue-light;
-    padding: 0.6rem 1rem;
-    border-radius: 0.4rem;
-    width: 600px;
+    padding: $spacing-md;
+    border-radius: $border-radius-lg;
+    max-width: 900px;
+    margin-bottom: $spacing-lg;
+    box-shadow: $shadow-sm;
+    border: 1px solid $clr-border;
+
+    @include respond-to('lg') {
+      padding: $spacing-lg;
+    }
 
     h4 {
-      font-size: 1.25rem;
-      
+      font-size: $fs-h5;
+      margin-bottom: $spacing-xs;
+      color: $clr-header;
+      font-weight: $fw-semibold;
+
       span {
-        font-size: 1rem;
-        font-weight: 100;
+        font-size: $fs-body;
+        font-weight: $fw-normal;
+        color: $clr-txt-secondary;
+        margin-left: $spacing-xs;
       }
     }
 
     .stages-info {
-      
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-md;
+      margin-top: $spacing-sm;
+
+      @include respond-to('lg') {
+        gap: $spacing-lg;
+      }
+
+      @media (max-width: 640px) {
+        flex-direction: column;
+        gap: $spacing-sm;
+      }
+
       .inProgress {
-        color: $clr-orange;
+        color: $clr-warning;
       }
-      
+
       .done {
-        color: $clr-primary;
+        color: $clr-success;
       }
-      
+
       .waiting {
-        color: $clr-redish;
+        color: $clr-error;
       }
     }
   }
 
   .no-team {
     background-color: $clr-section-blush-light;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
+    padding: $spacing-lg;
+    border-radius: $border-radius-lg;
     text-align: center;
     color: $clr-section-blush-deep;
+    box-shadow: $shadow-sm;
+    border: 1px solid $clr-border;
+    max-width: 800px;
+    margin: 0 auto $spacing-lg auto;
+
+    @include respond-to('lg') {
+      padding: $spacing-xl;
+    }
 
     h4 {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: $fs-h5;
+      font-weight: $fw-semibold;
+      line-height: $lh-base;
 
       span {
         color: $clr-primary;
         cursor: pointer;
         text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+        transition: $transition-base;
 
         &:hover {
           color: darken($clr-primary, 8%);
@@ -79,14 +145,19 @@
     }
   }
 
-  // Optional: Modal overlay styling
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 999;
+    animation: fadeIn 0.3s ease;
+
+    // Use the animation mixin from _animations.scss instead of defining it here
+    // This animation is already defined in the animations file
   }
 }
+

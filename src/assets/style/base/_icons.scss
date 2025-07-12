@@ -1,0 +1,555 @@
+// ==========================================================================
+// ICONS & ICONOGRAPHY
+// Consistent styling for all icons and icon-related elements
+// ==========================================================================
+
+// Base icon styles
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Icon sizes
+.icon-xs {
+  font-size: 0.75rem;
+}
+
+.icon-sm {
+  font-size: 0.875rem;
+}
+
+.icon-md {
+  font-size: 1rem;
+}
+
+.icon-lg {
+  font-size: 1.25rem;
+}
+
+.icon-xl {
+  font-size: 1.5rem;
+}
+
+.icon-xxl {
+  font-size: 2rem;
+}
+
+// Icon colors
+.icon-primary {
+  color: $clr-primary;
+}
+
+.icon-secondary {
+  color: $clr-secondary;
+}
+
+.icon-success {
+  color: $clr-success;
+}
+
+.icon-danger {
+  color: $clr-error;
+}
+
+.icon-warning {
+  color: $clr-warning;
+}
+
+.icon-info {
+  color: $clr-info;
+}
+
+.icon-light {
+  color: $clr-txt-light;
+}
+
+.icon-dark {
+  color: $clr-txt-dark;
+}
+
+.icon-muted {
+  color: $clr-txt-lighter;
+}
+
+// Icon with text
+.icon-with-text {
+  display: inline-flex;
+  align-items: center;
+  
+  .icon {
+    margin-right: $spacing-xs;
+    
+    [dir="rtl"] & {
+      margin-right: 0;
+      margin-left: $spacing-xs;
+    }
+  }
+}
+
+// Icon button
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: 1rem;
+  border-radius: $border-radius-circle;
+  transition: $transition-base;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: rgba($clr-bg-dark, 0.1);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba($clr-primary, 0.25);
+  }
+  
+  &:active {
+    background-color: rgba($clr-bg-dark, 0.2);
+  }
+  
+  &.icon-btn-sm {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.875rem;
+  }
+  
+  &.icon-btn-lg {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.25rem;
+  }
+  
+  // Icon button variants
+  &.icon-btn-primary {
+    color: $clr-primary;
+    
+    &:hover {
+      background-color: rgba($clr-primary, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-primary, 0.2);
+    }
+  }
+  
+  &.icon-btn-secondary {
+    color: $clr-secondary;
+    
+    &:hover {
+      background-color: rgba($clr-secondary, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-secondary, 0.2);
+    }
+  }
+  
+  &.icon-btn-success {
+    color: $clr-success;
+    
+    &:hover {
+      background-color: rgba($clr-success, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-success, 0.2);
+    }
+  }
+  
+  &.icon-btn-danger {
+    color: $clr-error;
+    
+    &:hover {
+      background-color: rgba($clr-error, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-error, 0.2);
+    }
+  }
+  
+  &.icon-btn-warning {
+    color: $clr-warning;
+    
+    &:hover {
+      background-color: rgba($clr-warning, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-warning, 0.2);
+    }
+  }
+  
+  &.icon-btn-info {
+    color: $clr-info;
+    
+    &:hover {
+      background-color: rgba($clr-info, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-info, 0.2);
+    }
+  }
+  
+  &.icon-btn-light {
+    color: $clr-txt-light;
+    
+    &:hover {
+      background-color: rgba($clr-txt-light, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-txt-light, 0.2);
+    }
+  }
+  
+  &.icon-btn-dark {
+    color: $clr-txt-dark;
+    
+    &:hover {
+      background-color: rgba($clr-txt-dark, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba($clr-txt-dark, 0.2);
+    }
+  }
+  
+  // Filled icon button
+  &.icon-btn-filled {
+    color: #fff;
+    
+    &.icon-btn-primary {
+      background-color: $clr-primary;
+      
+      &:hover {
+        background-color: darken($clr-primary, 5%);
+      }
+      
+      &:active {
+        background-color: darken($clr-primary, 10%);
+      }
+    }
+    
+    &.icon-btn-secondary {
+      background-color: $clr-secondary;
+      
+      &:hover {
+        background-color: darken($clr-secondary, 5%);
+      }
+      
+      &:active {
+        background-color: darken($clr-secondary, 10%);
+      }
+    }
+    
+    &.icon-btn-success {
+      background-color: $clr-success;
+      
+      &:hover {
+        background-color: darken($clr-success, 5%);
+      }
+      
+      &:active {
+        background-color: darken($clr-success, 10%);
+      }
+    }
+    
+    &.icon-btn-danger {
+      background-color: $clr-error;
+      
+      &:hover {
+        background-color: darken($clr-error, 5%);
+      }
+      
+      &:active {
+        background-color: darken($clr-error, 10%);
+      }
+    }
+    
+    &.icon-btn-warning {
+      background-color: $clr-warning;
+      color: $clr-txt-dark;
+      
+      &:hover {
+        background-color: darken($clr-warning, 5%);
+      }
+      
+      &:active {
+        background-color: darken($clr-warning, 10%);
+      }
+    }
+    
+    &.icon-btn-info {
+      background-color: $clr-info;
+      
+      &:hover {
+        background-color: darken($clr-info, 5%);
+      }
+      
+      &:active {
+        background-color: darken($clr-info, 10%);
+      }
+    }
+    
+    &.icon-btn-light {
+      background-color: $clr-bg-light;
+      color: $clr-txt;
+      
+      &:hover {
+        background-color: darken($clr-bg-light, 5%);
+      }
+      
+      &:active {
+        background-color: darken($clr-bg-light, 10%);
+      }
+    }
+    
+    &.icon-btn-dark {
+      background-color: $clr-txt-dark;
+      
+      &:hover {
+        background-color: lighten($clr-txt-dark, 5%);
+      }
+      
+      &:active {
+        background-color: lighten($clr-txt-dark, 10%);
+      }
+    }
+  }
+  
+  // Outlined icon button
+  &.icon-btn-outlined {
+    border: 1px solid currentColor;
+    
+    &.icon-btn-primary {
+      color: $clr-primary;
+      border-color: $clr-primary;
+    }
+    
+    &.icon-btn-secondary {
+      color: $clr-secondary;
+      border-color: $clr-secondary;
+    }
+    
+    &.icon-btn-success {
+      color: $clr-success;
+      border-color: $clr-success;
+    }
+    
+    &.icon-btn-danger {
+      color: $clr-error;
+      border-color: $clr-error;
+    }
+    
+    &.icon-btn-warning {
+      color: $clr-warning;
+      border-color: $clr-warning;
+    }
+    
+    &.icon-btn-info {
+      color: $clr-info;
+      border-color: $clr-info;
+    }
+    
+    &.icon-btn-light {
+      color: $clr-txt-light;
+      border-color: $clr-txt-light;
+    }
+    
+    &.icon-btn-dark {
+      color: $clr-txt-dark;
+      border-color: $clr-txt-dark;
+    }
+  }
+  
+  // Disabled icon button
+  &:disabled,
+  &.disabled {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+}
+
+// Icon in buttons
+.btn {
+  .icon {
+    margin-right: $spacing-xs;
+    
+    [dir="rtl"] & {
+      margin-right: 0;
+      margin-left: $spacing-xs;
+    }
+  }
+  
+  &.btn-icon-right {
+    .icon {
+      margin-right: 0;
+      margin-left: $spacing-xs;
+      
+      [dir="rtl"] & {
+        margin-right: $spacing-xs;
+        margin-left: 0;
+      }
+    }
+  }
+  
+  &.btn-icon-only {
+    padding-left: $spacing-sm;
+    padding-right: $spacing-sm;
+    
+    .icon {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+}
+
+// Icon stacks
+.icon-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+  
+  .icon-stack-1x,
+  .icon-stack-2x,
+  .icon-stack-3x {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .icon-stack-1x {
+    line-height: inherit;
+    font-size: 1em;
+  }
+  
+  .icon-stack-2x {
+    font-size: 1.5em;
+  }
+  
+  .icon-stack-3x {
+    font-size: 2em;
+  }
+}
+
+// Icon with badge
+.icon-with-badge {
+  position: relative;
+  display: inline-flex;
+  
+  .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(25%, -25%);
+    font-size: 0.65em;
+    padding: 0.25em 0.4em;
+    
+    [dir="rtl"] & {
+      right: auto;
+      left: 0;
+      transform: translate(-25%, -25%);
+    }
+    
+    &.badge-dot {
+      width: 0.5em;
+      height: 0.5em;
+      padding: 0;
+      border-radius: 50%;
+    }
+  }
+}
+
+// Animated icons
+.icon-spin {
+  animation: spin 2s infinite linear;
+}
+
+.icon-pulse {
+  animation: spin 1s infinite steps(8);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Icon list
+.icon-list {
+  padding-left: 0;
+  list-style: none;
+  
+  li {
+    position: relative;
+    padding-left: 1.75em;
+    margin-bottom: $spacing-xs;
+    
+    [dir="rtl"] & {
+      padding-left: 0;
+      padding-right: 1.75em;
+    }
+    
+    .icon {
+      position: absolute;
+      top: 0.25em;
+      left: 0;
+      
+      [dir="rtl"] & {
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+}
+
+// Icon grid
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
+  gap: $spacing-md;
+  
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    .icon {
+      font-size: 1.5rem;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .icon-name {
+      font-size: $fs-small;
+      color: $clr-txt-light;
+    }
+  }
+}

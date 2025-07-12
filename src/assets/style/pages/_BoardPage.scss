@@ -1,188 +1,261 @@
 .board-page {
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    direction: rtl;
+    padding: $spacing-md;
+    background-color: $clr-bg;
     color: $clr-txt;
+    min-height: 100vh;
+    max-width: 1600px;
+    margin: 0 auto;
+
+    @include respond-to('md') {
+        padding: $spacing-lg;
+    }
+
+    @include respond-to('lg') {
+        padding: $spacing-xl;
+    }
 
     .top {
-        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: $spacing-md;
+        flex-wrap: wrap;
+        gap: $spacing-sm;
 
-        h2 {
-            margin-bottom: 0.5rem;
-            color: $clr-header;
-            font-size: 1.8rem;
-        }
+        .board-header {
+            flex-grow: 1;
 
-        .btn-delete,
-        .btn-edit,
-        .btn-save {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: transparent;
-            border: none;
-            font-size: 1.2rem;
-        }
+            h2 {
+                font-size: $fs-h3;
+                margin-bottom: $spacing-xs;
+                color: $clr-header;
+                font-weight: $fw-bold;
 
-        .btn-edit,
-        .btn-save {
-            top: 4rem;
-            left: 1rem;
-            color: $clr-header;
+                @include respond-to('md') {
+                    font-size: $fs-h2;
+                }
+            }
 
-            &:hover {
-                color: darken($clr-header, 8%);
-                background-color: $clr-section-blue-light;
+            .description {
+                margin: $spacing-xs 0;
+                color: $clr-txt;
+                font-size: $fs-body;
+                line-height: $lh-base;
+                max-width: 60ch;
             }
         }
 
-        .btn-delete {
-            top: 1rem;
-            left: 1rem;
-            color: $clr-redish;
-
-            &:hover {
-                color: darken($clr-redish, 8%);
-                background-color: $clr-footer;
-            }
-        }
-
-        .description {
-            margin: .5rem 0;
-            color: $clr-txt;
-            font-size: 1rem;
-            line-height: 1.4;
+        .board-top-actions {
+            display: flex;
+            gap: $spacing-xs;
+            flex-wrap: wrap;
         }
 
         .edit-top {
             display: flex;
             flex-direction: column;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-md;
+            width: 100%;
 
             input,
             textarea {
                 background-color: #fff;
                 color: $clr-primary;
-                padding: 0.3rem 0.5rem;
-                border-radius: 0.3rem;
-                border: 1px solid $clr-primary;
-                width: max-content;
-                margin-bottom: 0.3rem;
+                padding: $spacing-xs $spacing-sm;
+                border-radius: $border-radius-md;
+                border: 1px solid $clr-light-border;
+                font-size: $fs-body;
+                max-width: 480px;
+                transition: $transition-base;
+
+                &:focus {
+                    outline: 2px solid $clr-primary;
+                    border-color: transparent;
+                    box-shadow: $shadow-sm;
+                }
             }
 
             .project-name {
-                margin-bottom: 0.5rem;
+                font-size: $fs-h4;
+                font-weight: $fw-semibold;
                 color: $clr-header;
-                font-size: 1.8rem;
             }
         }
 
         button {
             background-color: $clr-primary;
-            margin: 0;
-            margin-top: .5rem;
-            align-self: start;
-            padding: 0.3rem 0.7rem;
             color: #fff;
-            border-radius: 0.3rem;
             border: none;
+            padding: $spacing-xs $spacing-md;
+            border-radius: $border-radius-md;
+            font-weight: $fw-semibold;
+            font-size: $fs-small;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: $spacing-xs;
+            box-shadow: $shadow-sm;
+            transition: $transition-base;
 
             &:hover {
-                background: darken($clr-primary, 8%);
+                background-color: darken($clr-primary, 8%);
+                transform: translateY(-1px);
+                box-shadow: $shadow-md;
+            }
+
+            &:active {
+                transform: translateY(0);
             }
         }
 
-        .add-team-select {
-            margin-top: 0.5rem;
+        .btn-delete,
+        .btn-edit,
+        .btn-save {
+            background-color: transparent;
+            color: $clr-txt;
+            padding: $spacing-xs;
+            box-shadow: none;
+
+            &:hover {
+                color: $clr-header;
+                background-color: $clr-bg;
+            }
+        }
+
+        .btn-delete {
+            color: $clr-error;
+             &:hover {
+                color: darken($clr-error, 8%);
+                background-color: rgba($clr-error, 0.1);
+            }
+        }
+
+        .add-team-select,
+        .add-item-select {
+            margin-top: $spacing-sm;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: $spacing-sm;
+            width: 100%;
 
             select {
-                width: 150px;
-                border-radius: 0.4rem;
-                border: 1px solid $clr-light-border;
-                padding: 0.4rem;
+                width: 100%;
+                max-width: 250px;
+                border-radius: $border-radius-md;
+                border: 1px solid $clr-border;
+                padding: $spacing-xs;
+                font-size: $fs-body;
+                background-color: #fff;
+                transition: $transition-base;
+                
+                &:focus {
+                    outline: none;
+                    border-color: $clr-primary;
+                    box-shadow: $shadow-sm;
+                }
+            }
+
+            button {
+                align-self: flex-start;
             }
         }
 
+        .all-added-msg {
+            margin-top: $spacing-xs;
+            font-size: $fs-small;
+            color: $clr-primary;
+        }
     }
 
     .board-actions {
-        background-color: $clr-bg;
-        border-radius: 0.75rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        background-color: #fff;
+        padding: $spacing-md $spacing-lg;
+        border-radius: $border-radius-lg;
+        box-shadow: $shadow-md;
+        margin-bottom: $spacing-lg;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1rem;
-        margin-top: 2rem;
-        padding: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: $spacing-md;
+        align-items: center;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xs;
+
+            .action-label {
+                font-size: $fs-small;
+                font-weight: $fw-semibold;
+                color: $clr-txt;
+            }
+        }
+
+        .staff,
+        .items {
+            .pills-container {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: $spacing-xs;
+            }
+
+            span {
+                background-color: $clr-bg;
+                color: $clr-txt;
+                padding: $spacing-xs $spacing-sm;
+                font-size: $fs-small;
+                border-radius: $border-radius-pill;
+                font-weight: $fw-medium;
+            }
+        }
 
         .stage {
-            display: flex;
+            flex-direction: row;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        .staff {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-
-            span {
-                color: $clr-bg;
-                padding: 0.3rem 0.7rem;
-                border-radius: 999px;
-                font-size: 0.85rem;
-            }
-        }
-        
-        .items {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-
-            span {
-                color: $clr-bg;
-                background-color: $clr-header;
-                padding: 0.3rem 0.7rem;
-                border-radius: 999px;
-                font-size: 0.85rem;
-            }
+            gap: $spacing-sm;
         }
 
         .dates {
-            display: flex;
-            flex-direction: column;
+            font-size: $fs-small;
+            gap: $spacing-xs;
+            span {
+                display: block;
+            }
         }
 
         .btn-add {
             background-color: $clr-primary;
             color: #fff;
             border: none;
-            transition: background-color 0.3s;
-            margin-bottom: 1rem;
-            width: max-content;
+            padding: $spacing-xs $spacing-md;
+            border-radius: $border-radius-md;
+            font-weight: $fw-semibold;
+            font-size: $fs-small;
+            display: inline-flex;
+            align-items: center;
+            gap: $spacing-xs;
+            box-shadow: $shadow-sm;
+            transition: $transition-base;
+            margin-top: $spacing-xs;
+            justify-self: end;
 
             &:hover {
                 background-color: darken($clr-primary, 8%);
+                transform: translateY(-1px);
+                box-shadow: $shadow-md;
+            }
+
+            &:active {
+                transform: translateY(0);
             }
         }
     }
 
     .tasks {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.2rem;
-        margin-top: 2rem;
-        align-items: start;
-        padding: 0 0.5rem;
-
-        @media (min-width: 900px) {
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: $spacing-md;
+        padding-bottom: $spacing-lg;
     }
 }

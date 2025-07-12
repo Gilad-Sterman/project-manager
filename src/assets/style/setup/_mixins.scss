@@ -1,11 +1,150 @@
+// Responsive breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "sm" {
+    @media (min-width: 576px) { @content; }
+  } @else if $breakpoint == "md" {
+    @media (min-width: 768px) { @content; }
+  } @else if $breakpoint == "lg" {
+    @media (min-width: 992px) { @content; }
+  } @else if $breakpoint == "xl" {
+    @media (min-width: 1200px) { @content; }
+  } @else if $breakpoint == "xxl" {
+    @media (min-width: 1400px) { @content; }
+  }
+}
+
+// Flexbox helpers
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Typography
+@mixin font-size($size, $line-height: null) {
+  font-size: $size;
+  @if $line-height {
+    line-height: $line-height;
+  }
+}
+
+// Transitions
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+// Box shadows
+@mixin box-shadow($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  } @else if $level == 2 {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  } @else if $level == 3 {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  } @else if $level == 4 {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  } @else if $level == 5 {
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  }
+}
+
+// Buttons
+@mixin button-style($bg-color, $text-color, $hover-darken: 10%) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-family: $font-primary;
+  font-weight: $fw-medium;
+  cursor: pointer;
+  @include transition;
+  
+  &:hover {
+    background-color: darken($bg-color, $hover-darken);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($bg-color, 0.3);
+  }
+}
+
+// Cards
+@mixin card($padding: 1.25rem, $radius: 8px, $bg-color: #fff) {
+  background-color: $bg-color;
+  border-radius: $radius;
+  padding: $padding;
+  @include box-shadow(1);
+}
+
+// Truncate text with ellipsis
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// RTL support
+@mixin rtl {
+  [dir="rtl"] & {
+    @content;
+  }
+}
+
+// Accessibility - focus styles
+@mixin focus-outline($color: $clr-primary, $offset: 3px) {
+  outline: none;
+  box-shadow: 0 0 0 $offset rgba($color, 0.4);
+}
+
+// Gradients
+@mixin gradient($start-color, $end-color, $direction: to right) {
+  background: linear-gradient($direction, $start-color, $end-color);
+}
+
+// Maintain aspect ratio (for responsive images/videos)
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+// Legacy mixins for backward compatibility
 @mixin for-narrow-layout {
-    @media (min-width: 520px) {
-        @content;
-    }
+  @include respond-to("sm") {
+    @content;
+  }
 }
 
 @mixin for-normal-layout {
-    @media (min-width: 760px) {
-        @content;
-    }
+  @include respond-to("md") {
+    @content;
+  }
+}
+
+@mixin for-wide-layout {
+  @include respond-to("lg") {
+    @content;
+  }
 }

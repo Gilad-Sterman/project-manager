@@ -1,0 +1,466 @@
+// ==========================================================================
+// ALERTS & NOTIFICATIONS
+// Consistent styling for all alert and notification elements
+// ==========================================================================
+
+// Base alert styles
+.alert {
+  position: relative;
+  padding: $spacing-md $spacing-lg;
+  margin-bottom: $spacing-md;
+  border: $border-width-thin solid transparent;
+  border-radius: $border-radius-md;
+  font-family: $font-primary;
+  font-size: $fs-body;
+  line-height: 1.5;
+  
+  // Alert with icon
+  &.alert-with-icon {
+    padding-left: 3.5rem;
+    
+    [dir="rtl"] & {
+      padding-left: $spacing-lg;
+      padding-right: 3.5rem;
+    }
+    
+    .alert-icon {
+      position: absolute;
+      top: $spacing-md;
+      left: $spacing-md;
+      font-size: 1.5rem;
+      
+      [dir="rtl"] & {
+        left: auto;
+        right: $spacing-md;
+      }
+    }
+  }
+  
+  // Alert heading
+  .alert-heading {
+    color: inherit;
+    font-family: $font-secondary;
+    font-weight: $fw-bold;
+    margin-top: 0;
+    margin-bottom: $spacing-xs;
+  }
+  
+  // Alert link
+  .alert-link {
+    font-weight: $fw-bold;
+    text-decoration: underline;
+    
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  
+  // Dismissible alert
+  &.alert-dismissible {
+    padding-right: 3rem;
+    
+    [dir="rtl"] & {
+      padding-right: $spacing-lg;
+      padding-left: 3rem;
+    }
+    
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: $spacing-md;
+      color: inherit;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      opacity: 0.5;
+      font-size: 1.25rem;
+      font-weight: $fw-bold;
+      line-height: 1;
+      
+      [dir="rtl"] & {
+        right: auto;
+        left: 0;
+      }
+      
+      &:hover {
+        opacity: 1;
+      }
+      
+      &:focus {
+        outline: none;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Alert variants
+// Primary alert
+.alert-primary {
+  color: darken($clr-primary, 10%);
+  background-color: lighten($clr-primary, 45%);
+  border-color: lighten($clr-primary, 35%);
+  
+  .alert-link {
+    color: darken($clr-primary, 15%);
+  }
+}
+
+// Secondary alert
+.alert-secondary {
+  color: darken($clr-secondary, 10%);
+  background-color: lighten($clr-secondary, 35%);
+  border-color: lighten($clr-secondary, 25%);
+  
+  .alert-link {
+    color: darken($clr-secondary, 15%);
+  }
+}
+
+// Success alert
+.alert-success {
+  color: darken($clr-success, 10%);
+  background-color: $clr-success-light;
+  border-color: lighten($clr-success, 25%);
+  
+  .alert-link {
+    color: darken($clr-success, 15%);
+  }
+}
+
+// Danger alert
+.alert-danger {
+  color: darken($clr-error, 10%);
+  background-color: $clr-error-light;
+  border-color: lighten($clr-error, 25%);
+  
+  .alert-link {
+    color: darken($clr-error, 15%);
+  }
+}
+
+// Warning alert
+.alert-warning {
+  color: darken($clr-warning, 25%);
+  background-color: $clr-warning-light;
+  border-color: lighten($clr-warning, 25%);
+  
+  .alert-link {
+    color: darken($clr-warning, 30%);
+  }
+}
+
+// Info alert
+.alert-info {
+  color: darken($clr-info, 10%);
+  background-color: $clr-info-light;
+  border-color: lighten($clr-info, 25%);
+  
+  .alert-link {
+    color: darken($clr-info, 15%);
+  }
+}
+
+// Light alert
+.alert-light {
+  color: $clr-txt;
+  background-color: $clr-bg-light;
+  border-color: $clr-border-light;
+  
+  .alert-link {
+    color: $clr-txt-dark;
+  }
+}
+
+// Dark alert
+.alert-dark {
+  color: #fff;
+  background-color: $clr-txt-dark;
+  border-color: darken($clr-txt-dark, 5%);
+  
+  .alert-link {
+    color: $clr-bg-light;
+  }
+}
+
+// Toast notifications
+.toast {
+  max-width: 350px;
+  overflow: hidden;
+  font-size: $fs-small;
+  background-color: rgba($clr-bg-light, 0.95);
+  background-clip: padding-box;
+  border: $border-width-thin solid $clr-border-light;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: $transition-base;
+  
+  &:not(:last-child) {
+    margin-bottom: $spacing-sm;
+  }
+  
+  &.showing {
+    opacity: 1;
+  }
+  
+  &.show {
+    display: block;
+    opacity: 1;
+  }
+  
+  &.hide {
+    display: none;
+  }
+  
+  .toast-header {
+    display: flex;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    color: $clr-txt-light;
+    background-color: rgba($clr-bg-light, 0.85);
+    background-clip: padding-box;
+    border-bottom: $border-width-thin solid $clr-border-light;
+    
+    .toast-title {
+      margin-right: auto;
+      font-weight: $fw-bold;
+      
+      [dir="rtl"] & {
+        margin-right: 0;
+        margin-left: auto;
+      }
+    }
+    
+    .close {
+      margin-left: $spacing-xs;
+      font-size: 1.25rem;
+      color: $clr-txt-light;
+      opacity: 0.5;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      padding: 0;
+      
+      [dir="rtl"] & {
+        margin-left: 0;
+        margin-right: $spacing-xs;
+      }
+      
+      &:hover {
+        opacity: 1;
+      }
+      
+      &:focus {
+        outline: none;
+        opacity: 1;
+      }
+    }
+  }
+  
+  .toast-body {
+    padding: $spacing-sm;
+  }
+}
+
+// Toast variants
+.toast-primary {
+  .toast-header {
+    color: $clr-primary;
+    background-color: lighten($clr-primary, 45%);
+    border-bottom-color: lighten($clr-primary, 35%);
+  }
+}
+
+.toast-success {
+  .toast-header {
+    color: $clr-success;
+    background-color: $clr-success-light;
+    border-bottom-color: lighten($clr-success, 25%);
+  }
+}
+
+.toast-danger {
+  .toast-header {
+    color: $clr-error;
+    background-color: $clr-error-light;
+    border-bottom-color: lighten($clr-error, 25%);
+  }
+}
+
+.toast-warning {
+  .toast-header {
+    color: darken($clr-warning, 15%);
+    background-color: $clr-warning-light;
+    border-bottom-color: lighten($clr-warning, 25%);
+  }
+}
+
+.toast-info {
+  .toast-header {
+    color: $clr-info;
+    background-color: $clr-info-light;
+    border-bottom-color: lighten($clr-info, 25%);
+  }
+}
+
+// Toast container positions
+.toast-container {
+  position: fixed;
+  z-index: $z-index-tooltip;
+  padding: $spacing-md;
+  
+  &.top-right {
+    top: 0;
+    right: 0;
+    
+    [dir="rtl"] & {
+      right: auto;
+      left: 0;
+    }
+  }
+  
+  &.top-left {
+    top: 0;
+    left: 0;
+    
+    [dir="rtl"] & {
+      left: auto;
+      right: 0;
+    }
+  }
+  
+  &.bottom-right {
+    bottom: 0;
+    right: 0;
+    
+    [dir="rtl"] & {
+      right: auto;
+      left: 0;
+    }
+  }
+  
+  &.bottom-left {
+    bottom: 0;
+    left: 0;
+    
+    [dir="rtl"] & {
+      left: auto;
+      right: 0;
+    }
+  }
+  
+  &.top-center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  &.bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// Badge notifications
+.badge {
+  display: inline-block;
+  padding: $spacing-xxs $spacing-xs;
+  font-size: 0.75em;
+  font-weight: $fw-bold;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: $border-radius-pill;
+  transition: $transition-base;
+  
+  &:empty {
+    display: none;
+  }
+  
+  // Pill badge
+  &.badge-pill {
+    padding-right: $spacing-sm;
+    padding-left: $spacing-sm;
+    border-radius: $border-radius-pill;
+  }
+  
+  // Badge variants
+  &.badge-primary {
+    color: #fff;
+    background-color: $clr-primary;
+  }
+  
+  &.badge-secondary {
+    color: #fff;
+    background-color: $clr-secondary;
+  }
+  
+  &.badge-success {
+    color: #fff;
+    background-color: $clr-success;
+  }
+  
+  &.badge-danger {
+    color: #fff;
+    background-color: $clr-error;
+  }
+  
+  &.badge-warning {
+    color: $clr-txt-dark;
+    background-color: $clr-warning;
+  }
+  
+  &.badge-info {
+    color: #fff;
+    background-color: $clr-info;
+  }
+  
+  &.badge-light {
+    color: $clr-txt;
+    background-color: $clr-bg-light;
+    border: $border-width-thin solid $clr-border-light;
+  }
+  
+  &.badge-dark {
+    color: #fff;
+    background-color: $clr-txt-dark;
+  }
+  
+  // Status badge
+  &.badge-status {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: $border-radius-circle;
+  }
+  
+  // Badge in buttons
+  .btn & {
+    position: relative;
+    top: -1px;
+  }
+}
+
+// Notification dot
+.notification-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: $clr-error;
+  border-radius: $border-radius-circle;
+  border: 2px solid $clr-bg-light;
+  transform: translate(25%, -25%);
+  
+  [dir="rtl"] & {
+    right: auto;
+    left: 0;
+    transform: translate(-25%, -25%);
+  }
+}

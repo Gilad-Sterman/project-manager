@@ -14,7 +14,7 @@ export function AppHeader() {
             <nav className="center-nav">
                 <NavLink to="/"><Home size={16} /> ראשי</NavLink>
                 <NavLink to="/team"><Users size={16} /> צוות</NavLink>
-                <NavLink to="/items"><Package size={16} /> פריטים</NavLink>
+                <NavLink to="/items"><Package size={16} /> מחסן</NavLink>
             </nav>
 
             <div className="right">

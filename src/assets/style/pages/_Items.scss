@@ -1,57 +1,162 @@
+// Use the animation mixin from _animations.scss instead of defining it here
+// This animation is already defined in the animations file
+
 .item-page {
-    padding: 2rem;
+    padding: $spacing-md;
+    background-color: $clr-bg;
+    color: $clr-txt;
+    min-height: 100vh;
+    max-width: 1600px;
+    margin: 0 auto;
+
+    @include respond-to('md') {
+        padding: $spacing-lg;
+    }
+
+    @include respond-to('lg') {
+        padding: $spacing-xl;
+    }
 
     h2 {
-        margin-bottom: 1rem;
+        font-size: $fs-h3;
+        margin-bottom: $spacing-md;
         color: $clr-header;
+        font-weight: $fw-bold;
+
+        @include respond-to('md') {
+            font-size: $fs-h2;
+        }
     }
 
     .btn-add {
-        margin-bottom: 1.5rem;
         background-color: $clr-primary;
         color: #fff;
-        padding: 0.5rem 1rem;
-        border-radius: 0.4rem;
         border: none;
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $border-radius-lg;
         cursor: pointer;
+        font-weight: $fw-semibold;
+        font-size: $fs-body;
+        margin-bottom: $spacing-lg;
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-xs;
+
+        transition: $transition-base;
+        box-shadow: $shadow-md;
 
         &:hover {
-            background-color: darken($clr-primary, 7%);
+            background-color: darken($clr-primary, 8%);
+            transform: translateY(-2px);
+            box-shadow: $shadow-lg;
+        }
+
+        &:active {
+            transform: translateY(0);
         }
     }
 
     .item-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: $spacing-md;
     }
 
     .item-preview {
         background-color: $clr-section-blue-light;
-        border-radius: 0.5rem;
-        padding: 1rem;
+        border-radius: $border-radius-lg;
+        padding: $spacing-md;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        box-shadow: $shadow-md;
+        border: 1px solid transparent;
+        transition: $transition-base;
+        animation: fadeIn 0.5s ease-out forwards;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: $shadow-lg;
+            border-color: rgba($clr-primary, 0.5);
+        }
 
         .item-info {
-            h4 {
-                margin: 0 0 0.5rem 0;
+            margin-bottom: $spacing-md;
+
+            h5 {
+                font-size: $fs-h5;
+                font-weight: $fw-semibold;
                 color: $clr-header;
+                margin-bottom: $spacing-xs;
             }
 
             p {
-                margin: 0.2rem 0;
-                font-size: 0.9rem;
+                font-size: $fs-small;
                 color: $clr-txt;
+                margin-bottom: $spacing-xs;
+            }
+
+            .usage-count {
+                display: inline-block;
+                background-color: rgba($clr-primary, 0.1);
+                color: $clr-primary;
+                font-size: $fs-xs;
+                font-weight: $fw-medium;
+                padding: $spacing-xxs $spacing-sm;
+                border-radius: $border-radius-pill;
+                margin-top: $spacing-xs;
+            }
+        }
+
+        .item-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: $spacing-xs;
+            margin-top: $spacing-md;
+
+            button {
+                background-color: transparent;
+                border: none;
+                color: $clr-txt;
+                padding: $spacing-xs;
+                border-radius: $border-radius-md;
+                cursor: pointer;
+                transition: $transition-base;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.05);
+                    color: $clr-header;
+                }
+            }
+
+            .btn-delete {
+                color: $clr-error;
+
+                &:hover {
+                    background-color: rgba($clr-error, 0.1);
+                    color: darken($clr-error, 10%);
+                }
             }
         }
 
         .item-meta {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
+            margin-top: $spacing-md;
+            padding-top: $spacing-md;
+            border-top: 1px solid $clr-border;
+            font-size: $fs-small;
             color: $clr-primary;
             font-style: italic;
+            opacity: 0.9;
         }
+    }
+
+    .no-items-message {
+        text-align: center;
+        font-size: 1.1rem;
+        color: $clr-txt-light;
+        margin-top: 4rem;
+        padding: 2rem;
+        background-color: rgba($clr-section-blue-light, 0.5);
+        border-radius: 16px;
     }
 }

@@ -2,7 +2,9 @@ export const utilService = {
     getGreeting,
     generateRandomId,
     getDataFromUser,
-    stringToColor
+    stringToColor,
+    formatDate,
+    getInitials
 }
 
 const months = [
@@ -95,6 +97,24 @@ function stringToColor(str = 'undefiend') {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`
 }
 
+function getInitials(fullName = '') {
+    if (!fullName || typeof fullName !== 'string') return '?';
 
+    const words = fullName.trim().split(/\s+/);
+    if (words.length === 1 && words[0].length > 1) {
+        return words[0].substring(0, 2).toUpperCase();
+    }
 
+    const firstInitial = words[0] ? words[0][0] : '';
+    const lastInitial = words.length > 1 ? words[words.length - 1][0] : '';
 
+    return `${firstInitial}${lastInitial}`.toUpperCase();
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const monthIndex = date.getMonth();
+    const day = date.getDate();
+    return `${day} ${months[monthIndex].name}`;
+}

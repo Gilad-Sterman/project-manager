@@ -1,50 +1,182 @@
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Container widths
+$container-max-width-sm: 540px;
+$container-max-width-md: 720px;
+$container-max-width-lg: 960px;
+$container-max-width-xl: 1140px;
+
+// Main layout grid
 .main-layout {
     display: grid;
-    grid-template-columns: 2fr 4fr 1fr;
-
-    >*.full {
+    grid-template-columns: 1fr minmax(auto, 1200px) 1fr;
+    width: 100%;
+    min-height: 100vh;
+    
+    > * {
         grid-column: 2;
     }
-
-    // >*:not(.full) {
-    //     grid-column: 1 / -1;
-    // }
-
-
-    // @include for-narrow-layout {
-    //     @include layoutGTC($break-narrow);
-    // }
-
-    // @include for-normal-layout {
-    //     @include layoutGTC($break-normal);
-    // }
-
-    // @include for-wide-layout {
-    //     @include layoutGTC($break-wide);
-    // }
-
-    @media (max-width: 500px) {
-        display: flex;
-        flex-direction: column;
+    
+    > .full-width {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+    
+    @media (max-width: $breakpoint-md) {
+        grid-template-columns: 1rem minmax(auto, 1fr) 1rem;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+        display: block;
+        padding: 0 1rem;
     }
 }
 
-
-// .main-layout {
-//     margin: 0 auto;
-//     padding-left: 1rem;
-//     padding-right: 1rem;
-// }
-
+// Responsive container
 .container {
-    max-width: 800px;
-    padding: 1em;
-    margin: auto;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    
+    @media (min-width: $breakpoint-sm) {
+        max-width: $container-max-width-sm;
+    }
+    
+    @media (min-width: $breakpoint-md) {
+        max-width: $container-max-width-md;
+    }
+    
+    @media (min-width: $breakpoint-lg) {
+        max-width: $container-max-width-lg;
+    }
+    
+    @media (min-width: $breakpoint-xl) {
+        max-width: $container-max-width-xl;
+    }
 }
 
-// footer {
-//     background-color: var(--clr1);
-//     color: var(--clr1bg);
-//     padding: 1em;
-//     text-align: center;
-// }
+// Fluid container (full width with padding)
+.container-fluid {
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+// Section containers
+.section {
+    padding: 2rem 0;
+    
+    @media (min-width: $breakpoint-md) {
+        padding: 3rem 0;
+    }
+    
+    @media (min-width: $breakpoint-lg) {
+        padding: 4rem 0;
+    }
+    
+    &.section-sm {
+        padding: 1.5rem 0;
+    }
+    
+    &.section-lg {
+        padding: 5rem 0;
+    }
+}
+
+// Card container
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    
+    &.card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .card-header {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    
+    .card-body {
+        padding: 1.25rem;
+    }
+    
+    .card-footer {
+        padding: 1rem 1.25rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+}
+
+// Grid system
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+}
+
+.col {
+    flex: 1 0 0%;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+@for $i from 1 through 12 {
+    .col-#{$i} {
+        flex: 0 0 auto;
+        width: percentage($i / 12);
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+    }
+    
+    .col-md-#{$i} {
+        @media (min-width: $breakpoint-md) {
+            flex: 0 0 auto;
+            width: percentage($i / 12);
+        }
+    }
+    
+    .col-lg-#{$i} {
+        @media (min-width: $breakpoint-lg) {
+            flex: 0 0 auto;
+            width: percentage($i / 12);
+        }
+    }
+}
+
+// Page layout components
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-content {
+    flex: 1 0 auto;
+}
+
+.sidebar {
+    padding: 1.5rem;
+    background-color: rgba($clr-bg-light, 0.5);
+    border-radius: 8px;
+}
+
+// Footer always at bottom
+footer {
+    flex-shrink: 0;
+    background-color: $clr-footer;
+    color: $clr-txt;
+    padding: 2rem 0;
+}

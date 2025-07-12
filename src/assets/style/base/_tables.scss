@@ -1,0 +1,509 @@
+// ==========================================================================
+// TABLES & DATA DISPLAY
+// Consistent styling for all table and data display elements
+// ==========================================================================
+
+// Base table styles
+.table {
+  width: 100%;
+  margin-bottom: $spacing-lg;
+  color: $clr-txt;
+  vertical-align: top;
+  border-color: $clr-border-light;
+  font-family: $font-primary;
+  border-collapse: collapse;
+  
+  // Table head
+  thead {
+    vertical-align: bottom;
+    border-bottom: 2px solid $clr-border;
+    
+    th {
+      font-weight: $fw-bold;
+      text-align: left;
+      padding: $spacing-sm $spacing-md;
+      vertical-align: bottom;
+      background-color: $clr-bg-light;
+      color: $clr-txt-dark;
+      font-family: $font-secondary;
+      white-space: nowrap;
+      
+      [dir="rtl"] & {
+        text-align: right;
+      }
+      
+      &.sortable {
+        cursor: pointer;
+        position: relative;
+        padding-right: $spacing-lg;
+        
+        [dir="rtl"] & {
+          padding-right: $spacing-md;
+          padding-left: $spacing-lg;
+        }
+        
+        &::after {
+          content: "↕";
+          position: absolute;
+          right: $spacing-sm;
+          opacity: 0.5;
+          
+          [dir="rtl"] & {
+            right: auto;
+            left: $spacing-sm;
+          }
+        }
+        
+        &.sort-asc::after {
+          content: "↑";
+          opacity: 1;
+        }
+        
+        &.sort-desc::after {
+          content: "↓";
+          opacity: 1;
+        }
+        
+        &:hover::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  
+  // Table body
+  tbody {
+    vertical-align: inherit;
+    
+    tr {
+      border-bottom: 1px solid $clr-border-light;
+      transition: $transition-fast;
+      
+      &:hover {
+        background-color: rgba($clr-primary, 0.03);
+      }
+      
+      &.selected {
+        background-color: rgba($clr-primary, 0.08);
+      }
+    }
+    
+    td {
+      padding: $spacing-sm $spacing-md;
+      vertical-align: middle;
+      
+      &.align-top {
+        vertical-align: top;
+      }
+      
+      &.align-bottom {
+        vertical-align: bottom;
+      }
+      
+      &.align-middle {
+        vertical-align: middle;
+      }
+    }
+  }
+  
+  // Table footer
+  tfoot {
+    border-top: 2px solid $clr-border;
+    
+    td, th {
+      padding: $spacing-sm $spacing-md;
+      vertical-align: top;
+      font-weight: $fw-bold;
+    }
+  }
+  
+  // Small table
+  &.table-sm {
+    thead th,
+    tbody td,
+    tfoot td,
+    tfoot th {
+      padding: $spacing-xxs $spacing-xs;
+      font-size: $fs-small;
+    }
+  }
+  
+  // Bordered table
+  &.table-bordered {
+    border: 1px solid $clr-border-light;
+    
+    th, td {
+      border: 1px solid $clr-border-light;
+    }
+  }
+  
+  // Borderless table
+  &.table-borderless {
+    th, td,
+    thead th,
+    tbody + tbody {
+      border: 0;
+    }
+  }
+  
+  // Striped rows
+  &.table-striped {
+    tbody tr:nth-of-type(odd) {
+      background-color: rgba($clr-bg-dark, 0.3);
+      
+      &:hover {
+        background-color: rgba($clr-primary, 0.05);
+      }
+    }
+  }
+  
+  // Hoverable rows
+  &.table-hover {
+    tbody tr:hover {
+      background-color: rgba($clr-primary, 0.08);
+    }
+  }
+  
+  // Responsive table
+  &.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    
+    @media (max-width: $breakpoint-md) {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+// Table variants
+.table-primary {
+  --bs-table-bg: #{rgba($clr-primary, 0.1)};
+  --bs-table-striped-bg: #{rgba($clr-primary, 0.15)};
+  --bs-table-hover-bg: #{rgba($clr-primary, 0.2)};
+  --bs-table-border-color: #{rgba($clr-primary, 0.2)};
+  
+  color: $clr-txt;
+  border-color: var(--bs-table-border-color);
+  
+  th, td {
+    background-color: var(--bs-table-bg);
+  }
+  
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bs-table-striped-bg);
+  }
+  
+  &.table-hover tbody tr:hover {
+    background-color: var(--bs-table-hover-bg);
+  }
+}
+
+.table-secondary {
+  --bs-table-bg: #{rgba($clr-secondary, 0.1)};
+  --bs-table-striped-bg: #{rgba($clr-secondary, 0.15)};
+  --bs-table-hover-bg: #{rgba($clr-secondary, 0.2)};
+  --bs-table-border-color: #{rgba($clr-secondary, 0.2)};
+  
+  color: $clr-txt;
+  border-color: var(--bs-table-border-color);
+  
+  th, td {
+    background-color: var(--bs-table-bg);
+  }
+  
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bs-table-striped-bg);
+  }
+  
+  &.table-hover tbody tr:hover {
+    background-color: var(--bs-table-hover-bg);
+  }
+}
+
+.table-success {
+  --bs-table-bg: #{rgba($clr-success, 0.1)};
+  --bs-table-striped-bg: #{rgba($clr-success, 0.15)};
+  --bs-table-hover-bg: #{rgba($clr-success, 0.2)};
+  --bs-table-border-color: #{rgba($clr-success, 0.2)};
+  
+  color: $clr-txt;
+  border-color: var(--bs-table-border-color);
+  
+  th, td {
+    background-color: var(--bs-table-bg);
+  }
+  
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bs-table-striped-bg);
+  }
+  
+  &.table-hover tbody tr:hover {
+    background-color: var(--bs-table-hover-bg);
+  }
+}
+
+.table-danger {
+  --bs-table-bg: #{rgba($clr-error, 0.1)};
+  --bs-table-striped-bg: #{rgba($clr-error, 0.15)};
+  --bs-table-hover-bg: #{rgba($clr-error, 0.2)};
+  --bs-table-border-color: #{rgba($clr-error, 0.2)};
+  
+  color: $clr-txt;
+  border-color: var(--bs-table-border-color);
+  
+  th, td {
+    background-color: var(--bs-table-bg);
+  }
+  
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bs-table-striped-bg);
+  }
+  
+  &.table-hover tbody tr:hover {
+    background-color: var(--bs-table-hover-bg);
+  }
+}
+
+.table-warning {
+  --bs-table-bg: #{rgba($clr-warning, 0.1)};
+  --bs-table-striped-bg: #{rgba($clr-warning, 0.15)};
+  --bs-table-hover-bg: #{rgba($clr-warning, 0.2)};
+  --bs-table-border-color: #{rgba($clr-warning, 0.2)};
+  
+  color: $clr-txt;
+  border-color: var(--bs-table-border-color);
+  
+  th, td {
+    background-color: var(--bs-table-bg);
+  }
+  
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bs-table-striped-bg);
+  }
+  
+  &.table-hover tbody tr:hover {
+    background-color: var(--bs-table-hover-bg);
+  }
+}
+
+.table-info {
+  --bs-table-bg: #{rgba($clr-info, 0.1)};
+  --bs-table-striped-bg: #{rgba($clr-info, 0.15)};
+  --bs-table-hover-bg: #{rgba($clr-info, 0.2)};
+  --bs-table-border-color: #{rgba($clr-info, 0.2)};
+  
+  color: $clr-txt;
+  border-color: var(--bs-table-border-color);
+  
+  th, td {
+    background-color: var(--bs-table-bg);
+  }
+  
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bs-table-striped-bg);
+  }
+  
+  &.table-hover tbody tr:hover {
+    background-color: var(--bs-table-hover-bg);
+  }
+}
+
+// Data list
+.data-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  .data-item {
+    display: flex;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid $clr-border-light;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .data-label {
+      flex: 0 0 30%;
+      font-weight: $fw-medium;
+      color: $clr-txt-dark;
+      padding-right: $spacing-md;
+      
+      [dir="rtl"] & {
+        padding-right: 0;
+        padding-left: $spacing-md;
+      }
+    }
+    
+    .data-value {
+      flex: 1;
+      color: $clr-txt;
+    }
+  }
+}
+
+// Data cards
+.data-card {
+  background-color: $clr-bg-light;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  
+  .data-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-sm;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid $clr-border-light;
+    
+    .data-card-title {
+      font-weight: $fw-bold;
+      margin: 0;
+      color: $clr-txt-dark;
+    }
+    
+    .data-card-actions {
+      display: flex;
+      gap: $spacing-xs;
+    }
+  }
+  
+  .data-card-body {
+    .data-list {
+      margin: 0;
+    }
+  }
+  
+  .data-card-footer {
+    margin-top: $spacing-sm;
+    padding-top: $spacing-sm;
+    border-top: 1px solid $clr-border-light;
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+  }
+}
+
+// Pagination
+.pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: $border-radius-md;
+  
+  .page-item {
+    &:first-child {
+      .page-link {
+        border-top-left-radius: $border-radius-md;
+        border-bottom-left-radius: $border-radius-md;
+        
+        [dir="rtl"] & {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-top-right-radius: $border-radius-md;
+          border-bottom-right-radius: $border-radius-md;
+        }
+      }
+    }
+    
+    &:last-child {
+      .page-link {
+        border-top-right-radius: $border-radius-md;
+        border-bottom-right-radius: $border-radius-md;
+        
+        [dir="rtl"] & {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          border-top-left-radius: $border-radius-md;
+          border-bottom-left-radius: $border-radius-md;
+        }
+      }
+    }
+    
+    &.active .page-link {
+      z-index: 3;
+      color: #fff;
+      background-color: $clr-primary;
+      border-color: $clr-primary;
+    }
+    
+    &.disabled .page-link {
+      color: $clr-txt-lighter;
+      pointer-events: none;
+      background-color: $clr-bg-light;
+      border-color: $clr-border-light;
+    }
+  }
+  
+  .page-link {
+    position: relative;
+    display: block;
+    padding: $spacing-xs $spacing-sm;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: $clr-primary;
+    background-color: $clr-bg-light;
+    border: 1px solid $clr-border-light;
+    text-decoration: none;
+    transition: $transition-fast;
+    
+    [dir="rtl"] & {
+      margin-left: 0;
+      margin-right: -1px;
+    }
+    
+    &:hover {
+      z-index: 2;
+      color: darken($clr-primary, 15%);
+      background-color: $clr-bg-dark;
+      border-color: $clr-border;
+    }
+    
+    &:focus {
+      z-index: 3;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba($clr-primary, 0.25);
+    }
+  }
+}
+
+// Simple pagination
+.pagination-simple {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+  
+  .pagination-prev,
+  .pagination-next {
+    color: $clr-primary;
+    background: none;
+    border: none;
+    font-size: $fs-body;
+    cursor: pointer;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    transition: $transition-fast;
+    
+    &:hover {
+      background-color: rgba($clr-primary, 0.1);
+    }
+    
+    &:disabled {
+      color: $clr-txt-lighter;
+      cursor: not-allowed;
+      
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+  
+  .pagination-info {
+    color: $clr-txt;
+    font-size: $fs-small;
+  }
+}

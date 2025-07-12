@@ -1,0 +1,484 @@
+// ==========================================================================
+// TYPOGRAPHY
+// Consistent styling for all text elements
+// ==========================================================================
+
+// Base typography styles
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: $font-primary;
+  font-weight: $fw-normal;
+  font-size: $fs-body;
+  line-height: 1.5;
+  color: $clr-txt;
+  
+  @include respond-to('sm') {
+    font-size: calc(#{$fs-body} - 0.0625rem); // 15px on small screens
+  }
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+  font-family: $font-secondary;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+  color: $clr-txt-dark;
+}
+
+h1, .h1 {
+  font-size: $fs-h1;
+  margin-bottom: $spacing-lg;
+  
+  @include respond-to('sm') {
+    font-size: calc(#{$fs-h1} - 0.5rem); // Smaller on mobile
+  }
+}
+
+h2, .h2 {
+  font-size: $fs-h2;
+  margin-bottom: $spacing-md;
+  
+  @include respond-to('sm') {
+    font-size: calc(#{$fs-h2} - 0.25rem);
+  }
+}
+
+h3, .h3 {
+  font-size: $fs-h3;
+  
+  @include respond-to('sm') {
+    font-size: calc(#{$fs-h3} - 0.25rem);
+  }
+}
+
+h4, .h4 {
+  font-size: $fs-h4;
+}
+
+h5, .h5 {
+  font-size: $fs-h5;
+}
+
+h6, .h6 {
+  font-size: $fs-large;
+}
+
+// Paragraphs
+p {
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &.lead {
+    font-size: $fs-large;
+    font-weight: $fw-light;
+    line-height: 1.6;
+  }
+}
+
+// Links
+a {
+  color: $clr-primary;
+  text-decoration: none;
+  transition: $transition-fast;
+  
+  &:hover {
+    color: darken($clr-primary, 15%);
+    text-decoration: underline;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba($clr-primary, 0.25);
+  }
+}
+
+// Lists
+ul, ol {
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+  padding-left: $spacing-lg;
+  
+  [dir="rtl"] & {
+    padding-left: 0;
+    padding-right: $spacing-lg;
+  }
+  
+  li {
+    margin-bottom: $spacing-xs;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  ul, ol {
+    margin-top: $spacing-xs;
+    margin-bottom: 0;
+  }
+}
+
+// Description lists
+dl {
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+}
+
+dt {
+  font-weight: $fw-bold;
+  margin-bottom: $spacing-xxs;
+}
+
+dd {
+  margin-bottom: $spacing-sm;
+  margin-left: 0;
+  
+  [dir="rtl"] & {
+    margin-right: 0;
+  }
+}
+
+// Blockquotes
+blockquote {
+  margin: 0 0 $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  border-left: 4px solid $clr-primary;
+  background-color: rgba($clr-primary, 0.05);
+  font-style: italic;
+  
+  [dir="rtl"] & {
+    border-left: 0;
+    border-right: 4px solid $clr-primary;
+    padding-left: $spacing-lg;
+    padding-right: $spacing-lg;
+  }
+  
+  p {
+    margin-bottom: $spacing-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  footer {
+    display: block;
+    font-size: $fs-small;
+    color: $clr-txt-light;
+    
+    &::before {
+      content: "\2014\00A0"; // Em dash and non-breaking space
+    }
+  }
+}
+
+// Inline text elements
+small, .text-small {
+  font-size: $fs-small;
+}
+
+strong, .text-bold {
+  font-weight: $fw-bold;
+}
+
+em, .text-italic {
+  font-style: italic;
+}
+
+mark, .text-highlight {
+  padding: 0.2em;
+  background-color: $clr-warning-light;
+}
+
+del, .text-deleted {
+  text-decoration: line-through;
+}
+
+ins, .text-inserted {
+  text-decoration: underline;
+}
+
+sub, .text-subscript {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+  bottom: -0.25em;
+}
+
+sup, .text-superscript {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+  top: -0.5em;
+}
+
+// Abbreviations
+abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted $clr-border;
+  text-decoration: none;
+}
+
+// Code
+code, pre, kbd, samp {
+  font-family: $font-mono;
+  font-size: 0.875em;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  color: $clr-error;
+  background-color: rgba($clr-error, 0.1);
+  border-radius: $border-radius-sm;
+}
+
+pre {
+  display: block;
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+  padding: $spacing-md;
+  overflow: auto;
+  font-size: 0.875em;
+  color: $clr-txt;
+  background-color: $clr-bg-dark;
+  border-radius: $border-radius-md;
+  
+  code {
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+    border-radius: 0;
+  }
+}
+
+kbd {
+  padding: 0.2em 0.4em;
+  font-size: 0.875em;
+  color: #fff;
+  background-color: $clr-txt-dark;
+  border-radius: $border-radius-sm;
+  box-shadow: inset 0 -0.1em 0 rgba(0, 0, 0, 0.25);
+  
+  kbd {
+    padding: 0;
+    font-size: 100%;
+    font-weight: $fw-bold;
+    box-shadow: none;
+  }
+}
+
+// Text alignment
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+// Text transformation
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+// Text wrapping and overflow
+.text-wrap {
+  white-space: normal;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.text-truncate {
+  @include text-truncate;
+}
+
+// Text colors
+.text-primary {
+  color: $clr-primary;
+}
+
+.text-secondary {
+  color: $clr-secondary;
+}
+
+.text-success {
+  color: $clr-success;
+}
+
+.text-danger {
+  color: $clr-error;
+}
+
+.text-warning {
+  color: $clr-warning;
+}
+
+.text-info {
+  color: $clr-info;
+}
+
+.text-light {
+  color: $clr-txt-light;
+}
+
+.text-dark {
+  color: $clr-txt-dark;
+}
+
+.text-muted {
+  color: $clr-txt-lighter;
+}
+
+// Font weights
+.font-light {
+  font-weight: $fw-light;
+}
+
+.font-normal {
+  font-weight: $fw-normal;
+}
+
+.font-medium {
+  font-weight: $fw-medium;
+}
+
+.font-semibold {
+  font-weight: $fw-semibold;
+}
+
+.font-bold {
+  font-weight: $fw-bold;
+}
+
+// Font styles
+.font-italic {
+  font-style: italic;
+}
+
+.font-normal-style {
+  font-style: normal;
+}
+
+// Line heights
+.line-height-1 {
+  line-height: 1;
+}
+
+.line-height-sm {
+  line-height: 1.25;
+}
+
+.line-height-base {
+  line-height: 1.5;
+}
+
+.line-height-lg {
+  line-height: 1.75;
+}
+
+// Font sizes
+.fs-small {
+  font-size: $fs-small;
+}
+
+.fs-body {
+  font-size: $fs-body;
+}
+
+.fs-large {
+  font-size: $fs-large;
+}
+
+.fs-h5 {
+  font-size: $fs-h5;
+}
+
+.fs-h4 {
+  font-size: $fs-h4;
+}
+
+.fs-h3 {
+  font-size: $fs-h3;
+}
+
+.fs-h2 {
+  font-size: $fs-h2;
+}
+
+.fs-h1 {
+  font-size: $fs-h1;
+}
+
+// Responsive text hiding
+@include respond-to('xs') {
+  .text-hide-xs {
+    display: none;
+  }
+}
+
+@include respond-to('sm') {
+  .text-hide-sm {
+    display: none;
+  }
+}
+
+@include respond-to('md') {
+  .text-hide-md {
+    display: none;
+  }
+}
+
+@include respond-to('lg') {
+  .text-hide-lg {
+    display: none;
+  }
+}
+
+@include respond-to('xl') {
+  .text-hide-xl {
+    display: none;
+  }
+}
+
+// RTL text direction
+[dir="rtl"] {
+  .text-rtl-right {
+    text-align: left;
+  }
+  
+  .text-rtl-left {
+    text-align: right;
+  }
+}
